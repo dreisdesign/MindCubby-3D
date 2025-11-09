@@ -1,0 +1,28 @@
+# 3D Printing Repo .gitignore
+
+# Cura backups and cache
+*.curaprofile.bak
+*.backup
+__pycache__/
+*.py[cod]
+
+# Large binary files (optional - uncomment to exclude)
+# *.gcode
+# *.stl
+# *.obj
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Temporary files
+*.tmp
+*.temp
