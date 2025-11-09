@@ -1,5 +1,9 @@
 # 3D Printing Repo .gitignore
 
+# Archive folders
+_archive/
+_archive
+
 # Cura backups and cache
 *.curaprofile.bak
 *.backup
