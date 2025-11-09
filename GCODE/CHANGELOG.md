@@ -1,5 +1,38 @@
 # G-Code Optimization Changelog
 
+## End G-Code
+
+### v1.0 - Warm Hold for Quick Reprints (2025-11-09)
+**Purpose**: Final retract, park, and warm standby for rapid iteration  
+**Workflow**: Print finishes → 5-min hold at warm temps → Quick reprint or cool shutdown  
+**Nozzle Standby**: 180°C (only ~60s to reach 220°C for reprint)  
+**Bed Standby**: 70°C (close to material temps, minimal reheat needed)  
+**Hold Duration**: 5 minutes (time to assess print quality and decide)
+
+### Key Features:
+- Retract 4mm total to prevent oozing
+- Lift Z 10mm to clear print completely
+- Park at front-left for easy print removal/assessment
+- Keep warm but not active (ready for quick reheat)
+- After 5 minutes, cool to off
+- Z axis stays locked (holds position)
+
+### Timeline:
+```
+Print finishes → Retract & lift → Park nozzle
+↓
+Nozzle: 180°C, Bed: 70°C (warm standby)
+↓
+5-minute hold (user decides: reprint or remove)
+↓
+If reprint: Select new profile/material, heat up (~60s to 220°C)
+If done: Already cooled, remove print
+```
+
+---
+
+## Start G-Code
+
 ## v5.0 - Universal Multi-Material Profile (2025-11-09)
 **Issue**: Must manually edit G-code temps when switching between PLA/PETG/TPU  
 **Solution**: Use Cura variable injection - single G-code for all materials  
