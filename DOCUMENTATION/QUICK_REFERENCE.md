@@ -49,6 +49,48 @@ Fast lookup for common tasks, checklists, and keyboard shortcuts.
 
 ---
 
+## 🔧 Troubleshooting & Fixes
+
+### Stringing (Thin Filament Between Moves)
+**Symptom**: Thin strings or webbing connecting different parts of print
+
+**Quick Fixes (try in order):**
+1. **Lower nozzle temp** by 2-5°C (e.g., PETG 220°C → 215°C)
+   - Reduces filament flow during travel
+   - Set in Cura Material settings
+2. **Increase retraction speed** (if not already done)
+   - Material → Retraction Speed: 50 → 60-65 mm/s
+3. **Enable coasting** (if still present)
+   - In print profile: Coasting → Enable
+   - Stops extruding early, coast on pressure
+
+### Blobs at Layer Seams
+**Symptom**: Visible bump where each layer starts/ends
+
+**Quick Fixes:**
+1. **Enable coasting** in print profile
+2. **Add retraction extra prime** (compensate for pressure loss)
+3. **Lower nozzle temp** by 3-5°C
+4. **Z-Seam**: Already set to "Shortest" (good for hiding)
+
+### First Layer Issues
+**Symptom**: Poor adhesion, gaps, or uneven extrusion on first layer
+
+**Quick Fixes:**
+1. **Check bed level**: Run `G29` (BLTouch auto-level)
+2. **Clean bed** with IPA (removes oils/residue)
+3. **Check nozzle distance**: Should be paper-thin height
+4. **Verify first-layer temp**: Usually 5°C lower than normal
+
+### Nozzle Oozing During Print
+**Symptom**: Drips or blobs falling from nozzle
+
+**Quick Fixes:**
+1. **Increase retraction** (8mm is good for PETG)
+2. **Increase retraction speed** (45-50 mm/s minimum)
+3. **Lower nozzle temp** (less fluid filament = less ooze)
+4. **Enable coasting** (stops extruding early)
+
 ## 📋 Pre-Print Checklist
 
 - [ ] Bed is clean (IPA wipe)

@@ -17,18 +17,18 @@ When you select a material in Cura, these values are **automatically replaced** 
 
 ### Step 1: Create/Verify Material Profiles in Cura
 
-In Cura, go to **Settings → Manage Materials**:
+In Cura, go to **Preferences → Materials**:
 
 #### PLA Profile
 - **Nozzle Temp**: 200°C (or 205-210°C if you prefer)
 - **Bed Temp**: 60°C
 
 #### PETG Profile  
-- **Nozzle Temp**: 240°C (range 230-250°C)
-- **Bed Temp**: 75°C (range 70-80°C)
+- **Nozzle Temp**: 215-220°C (230-250°C if needed; lower temp = less stringing)
+- **Bed Temp**: 70-75°C
 
 #### TPU Profile
-- **Nozzle Temp**: 230°C (range 220-240°C)
+- **Nozzle Temp**: 220-230°C
 - **Bed Temp**: 50°C
 
 ### Step 2: Use v5.0 as Start G-code
@@ -66,8 +66,8 @@ No editing needed! Just select material and go.
 
 4. Switch to **PETG**, export again:
    ```
-   M104 S240   ; Should show PETG nozzle temp
-   M190 S75    ; Should show PETG bed temp
+   M104 S220   ; Should show PETG nozzle temp (or your adjusted value)
+   M190 S70    ; Should show PETG bed temp
    ```
 
 If temps match your material profiles = **working correctly!**
@@ -79,6 +79,18 @@ If temps match your material profiles = **working correctly!**
 - ✅ **Temps must be set correctly** in material settings
 - ✅ **Always export & verify** before printing
 
+## Temperature Tuning Tips
+
+### Reducing Stringing (thin filament between moves):
+- **Lower nozzle temp** by 2-5°C (reduces filament flow during travel)
+- Example: PETG 220°C → try 215°C if stringing appears
+- This is per-material, so adjust in your Material settings
+
+### Reducing Blobs at Layer Seams:
+- Enable **Coasting** in print profile (stops extruding early)
+- Enable **Retraction Extra Prime** (compensates for pressure loss)
+- Lower temp slightly (less ooze pressure)
+
 ## Other Useful Cura Variables
 
 If you want to expand later:
@@ -86,8 +98,6 @@ If you want to expand later:
 ```
 {material_print_temperature}     ; Nozzle temp
 {material_bed_temperature}       ; Bed temp
-{material_print_temperature_layer_0}  ; First layer nozzle temp (if different)
-{material_bed_temperature_layer_0}    ; First layer bed temp (if different)
 {material_flow}                  ; Flow rate percentage
 {material_name}                  ; Material name (for logging)
 ```
@@ -95,10 +105,10 @@ If you want to expand later:
 ## Troubleshooting
 
 **Q: Variables not being replaced?**  
-A: Check that Cura material profiles have temps set. Go to Manage Materials and verify.
+A: Check that Cura material profiles have temps set. Go to Preferences → Materials and verify.
 
-**Q: Want different temps for first layer only?**  
-A: Replace with `{material_print_temperature_layer_0}` for first-layer-specific temps (if Cura supports in your version).
+**Q: Temps showing but wrong value (e.g., S23 instead of S220)?**  
+A: Cura version issue. The start G-code v5.0 uses `{material_print_temperature}` which is stable across versions.
 
 **Q: How to check Cura version?**  
 A: Help → About Cura. Most modern versions (4.8+) support variable injection.
