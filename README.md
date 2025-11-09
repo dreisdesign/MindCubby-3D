@@ -2,6 +2,13 @@
 
 Repository for 3D printing projects, G-code files, and printer configurations.
 
+## 📚 Documentation
+
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and all changes
+- **[COPILOT_DOCUMENTATION_GUIDE.md](COPILOT_DOCUMENTATION_GUIDE.md)** - How to maintain docs with GitHub Copilot
+- **[DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md)** - Printer specs and material profiles
+- **[PROFILES/README.md](PROFILES/README.md)** - Cura profile setup instructions
+
 ## Printer Setup
 - **Printer**: Creality Ender-3 V2
 - **Nozzle**: 0.4mm
@@ -12,10 +19,15 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 
 ```
 MINDCUBBY-3D/
-├── DOCUMENTATION/          # Printer specs, setup guides, profiles
-├── GCODE/                   # Sliced G-code files
-├── MODELS/                  # STL/OBJ 3D models (if tracked)
-├── PROFILES/                # Cura profiles and configurations
+├── CHANGELOG.md                    # Version history
+├── COPILOT_DOCUMENTATION_GUIDE.md  # Documentation maintenance guide
+├── DOCUMENTATION/                  # Printer specs, setup guides
+│   └── PRINTER_SPECS.md
+├── GCODE/                          # Sliced G-code files
+├── MODELS/                         # STL/OBJ 3D models (if tracked)
+├── PROFILES/                       # Cura profiles and configurations
+│   ├── README.md
+│   └── [Profile files]
 └── README.md
 ```
 
