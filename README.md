@@ -2,14 +2,25 @@
 
 Repository for 3D printing projects, G-code files, and printer configurations.
 
-## 📚 Documentation
+## 📚 Quick Start
 
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history and all changes
-- **[REPOSITORY_REVIEW.md](REPOSITORY_REVIEW.md)** - Structure analysis and optimization recommendations
-- **[COPILOT_DOCUMENTATION_GUIDE.md](COPILOT_DOCUMENTATION_GUIDE.md)** - How to maintain docs with GitHub Copilot
-- **[AGENT_MODE_GUIDE.md](AGENT_MODE_GUIDE.md)** - Use Copilot Agent Mode for autonomous repository management
-- **[DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md)** - Printer specs and material profiles
-- **[PROFILES/README.md](PROFILES/README.md)** - Cura profile setup instructions
+**New to the repo?** Start here:
+1. **[DOCUMENTATION/QUICK_REFERENCE.md](DOCUMENTATION/QUICK_REFERENCE.md)** - Fast lookup for common tasks
+2. **[DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md)** - Printer specs and materials
+3. **[PROFILES/README.md](PROFILES/README.md)** - How to load profiles
+
+**All Documentation:** [DOCUMENTATION/README.md](DOCUMENTATION/README.md) (complete index)
+
+## 📋 Key Resources
+
+| Need | Go To |
+|------|-------|
+| Quick tasks & checklists | [DOCUMENTATION/QUICK_REFERENCE.md](DOCUMENTATION/QUICK_REFERENCE.md) |
+| Hardware & materials | [DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md) |
+| Using Copilot AI | [DOCUMENTATION/COPILOT_GUIDE.md](DOCUMENTATION/COPILOT_GUIDE.md) |
+| Version history | [CHANGELOG.md](CHANGELOG.md) |
+| G-code profiles | [PROFILES/README.md](PROFILES/README.md) |
+| Structure analysis | [REPOSITORY_REVIEW.md](REPOSITORY_REVIEW.md) |
 
 ## Printer Setup
 - **Printer**: Creality Ender-3 V2
@@ -21,16 +32,30 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 
 ```
 MINDCUBBY-3D/
-├── CHANGELOG.md                    # Version history
-├── COPILOT_DOCUMENTATION_GUIDE.md  # Documentation maintenance guide
-├── DOCUMENTATION/                  # Printer specs, setup guides
-│   └── PRINTER_SPECS.md
-├── GCODE/                          # Sliced G-code files
-├── MODELS/                         # STL/OBJ 3D models (if tracked)
-├── PROFILES/                       # Cura profiles and configurations
+├── README.md                       # This file - main overview
+├── CHANGELOG.md                    # Version history and changes
+├── REPOSITORY_REVIEW.md            # Structure analysis
+│
+├── DOCUMENTATION/                  # 📚 All guides & references
+│   ├── README.md                  # Documentation index
+│   ├── QUICK_REFERENCE.md         # Fast lookup (START HERE!)
+│   ├── PRINTER_SPECS.md           # Hardware & material profiles
+│   ├── COPILOT_GUIDE.md           # Using AI for documentation
+│   └── [Coming soon: TROUBLESHOOTING, MAINTENANCE, VERSION]
+│
+├── PROFILES/                       # G-code profiles & optimization
 │   ├── README.md
-│   └── [Profile files]
-└── README.md
+│   ├── Ender3V2_Baseline_StartGCode.gcode
+│   └── Ender3V2_BLTouch_Optimized.txt
+│
+├── GCODE/                          # Sliced print files
+├── MODELS/                         # STL/OBJ 3D models
+├── .github/
+│   ├── chatmodes/
+│   │   └── Ender-3 V2.chatmode.md # Custom chat mode
+│   └── workflows/
+│
+└── .gitignore                      # Git configuration
 ```
 
 ## Quick Start

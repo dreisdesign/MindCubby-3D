@@ -8,16 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial repository setup with Ender-3 V2 documentation
-- Optimized start/end G-code profiles for BLTouch
-- Printer specifications and material profiles
-- Repository structure with GCODE, DOCUMENTATION, and PROFILES directories
-- .gitignore configuration for 3D printing projects
-- GitHub repository integration
-- CHANGELOG.md for version tracking
-- COPILOT_DOCUMENTATION_GUIDE.md for documentation maintenance
-- AGENT_MODE_GUIDE.md for autonomous repository management with Copilot
-- Baseline G-code reference file (Ender3V2_Baseline_StartGCode.gcode)
+- DOCUMENTATION/COPILOT_GUIDE.md - Consolidated guide for Copilot usage
+- DOCUMENTATION/QUICK_REFERENCE.md - Fast lookup guide with checklists
+- DOCUMENTATION/README.md - Documentation index and navigation guide
+- MARKDOWN_CONSOLIDATION.md - Analysis of documentation consolidation
+
+### Changed
+- Consolidated AGENT_MODE_GUIDE.md and COPILOT_DOCUMENTATION_GUIDE.md into single DOCUMENTATION/COPILOT_GUIDE.md
+- Reorganized documentation structure with DOCUMENTATION/ as primary hub
+- Updated main README.md for better navigation and clarity
+- Updated chat mode to reference new documentation structure
+- Cleaned up root directory by moving guides to DOCUMENTATION/
+
+### Deprecated
+- AGENT_MODE_GUIDE.md (moved to DOCUMENTATION/COPILOT_GUIDE.md)
+- COPILOT_DOCUMENTATION_GUIDE.md (moved to DOCUMENTATION/COPILOT_GUIDE.md)
+
+### Removed
+- Duplicate content from Copilot guides (consolidated)
 
 ### Changed
 - Merged remote README with local documentation
