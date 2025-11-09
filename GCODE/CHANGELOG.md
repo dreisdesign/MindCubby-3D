@@ -46,6 +46,12 @@ If done: Already cooled, remove print
 - **Result**: One G-code file works for all materials, all layer profiles
 - **Cura Management**: After first layer, Cura automatically adjusts nozzle temp per profile settings
 
+### Recent Update (Improved Nozzle Wipe):
+- Changed wipe strategy: Now wipes across bed edge (X220 Y5) instead of short local wipe
+- Retract → Lift → Wipe on edge → Lower to print position
+- Physically drags blob off nozzle on bed edge, eliminating stringing to print start
+- Result: Clean nozzle arrival at print position, no oozed filament transfer
+
 ### Setup Workflow:
 1. Create/verify material profiles in Cura (Settings → Manage Materials)
 2. Use v5.0 as Start G-code in printer settings

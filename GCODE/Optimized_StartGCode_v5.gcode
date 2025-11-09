@@ -34,14 +34,13 @@ G1 X0.4 Y200.0 Z0.3 F5000.0
 G1 X0.4 Y20 Z0.3 F1500.0 E15
 G92 E0 ; Reset Extruder
 
-; Wipe nozzle clean across bed to remove blob
-; Move to Y5 (away from print start area)
-G1 X0.4 Y5 Z0.3 F5000.0
-; Retract slightly to prevent oozing during move
+; Wipe nozzle clean on bed edge to remove blob
+; Retract slightly to prevent oozing during wipe
 G1 E-0.5 F2400
 ; Move up to clear bed before traveling
 G1 Z5.0 F3000
-; Travel to safe position away from prime lines
-G1 X30 Y20 Z5.0 F5000.0
-; Move back to first layer height
+; Travel and wipe across bed edge (X220 = far right edge)
+; Nozzle at Z5 (safe height), wipes while traveling to edge
+G1 X220 Y5 Z0.3 F5000.0
+; Move back down to first layer height at safe position
 G1 Z0.3 F3000
