@@ -1,5 +1,31 @@
 # G-Code Optimization Changelog
 
+## v5.0 - Universal Multi-Material Profile (2025-11-09)
+**Issue**: Must manually edit G-code temps when switching between PLA/PETG/TPU  
+**Solution**: Use Cura variable injection - single G-code for all materials  
+**Expected Benefit**: Select material in Cura, temps auto-inject, zero manual edits  
+**Materials Supported**: PLA, PETG, TPU (any Cura material profile)  
+**Documentation**: See MULTI_MATERIAL_SETUP.md
+
+### Key Implementation:
+- `{material_print_temperature}` → Auto-replaced with nozzle temp from Cura material
+- `{material_bed_temperature}` → Auto-replaced with bed temp from Cura material
+- **Result**: One G-code file works for all materials
+
+### Setup Workflow:
+1. Create/verify material profiles in Cura (Settings → Manage Materials)
+2. Use v5.0 as Start G-code in printer settings
+3. Select material in Cura before printing
+4. Cura injects correct temps automatically
+5. No manual editing ever needed
+
+### How to Verify It's Working:
+```
+Export G-code → Open file → Check first 3 lines for correct temps
+```
+
+---
+
 ## v4.0 - Parallel Heating (2025-11-09)
 **Issue**: Bed and nozzle heating sequentially wastes startup time  
 **Solution**: Use M104 (non-blocking nozzle set) + M190 (blocking bed wait) for parallel heating  
