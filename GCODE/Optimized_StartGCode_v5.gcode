@@ -11,10 +11,9 @@
 
 ; Universal parallel heating - uses Cura-injected material temps
 ; These {variables} are replaced by Cura based on material profile selected
-; Use first-layer temps if available (lets Cura manage layer-specific temps)
-M104 S{material_print_temperature_layer_0} ; Preheat nozzle to first-layer temp (non-blocking)
+M104 S{material_print_temperature} ; Preheat nozzle (non-blocking)
 M190 S{material_bed_temperature} ; Heat bed and wait
-M109 S{material_print_temperature_layer_0} ; Wait for nozzle to reach first-layer temp
+M109 S{material_print_temperature} ; Wait for nozzle to reach temp
 ; Note: Cura will adjust nozzle temp after first layer per profile settings
 
 ; Home and probe

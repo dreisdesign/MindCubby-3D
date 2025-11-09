@@ -41,24 +41,22 @@ If done: Already cooled, remove print
 **Documentation**: See MULTI_MATERIAL_SETUP.md
 
 ### Key Implementation:
-- `{material_print_temperature_layer_0}` → Auto-replaced with first-layer nozzle temp from Cura profile
+- `{material_print_temperature}` → Auto-replaced with full print nozzle temp from Cura material
 - `{material_bed_temperature}` → Auto-replaced with bed temp from Cura material
-- **Result**: One G-code file works for all materials, all layer profiles
+- **Result**: One G-code file works for all materials
 - **Cura Management**: After first layer, Cura automatically adjusts nozzle temp per profile settings
 
-### Recent Update (Improved Nozzle Wipe):
-- Changed wipe strategy: Now wipes across bed edge (X220 Y5) instead of short local wipe
+### Recent Updates:
+- Fixed variable injection: Using `material_print_temperature` (stable) instead of `material_print_temperature_layer_0` (buggy in Cura 5.11.0)
+- Improved nozzle wipe on bed edge to eliminate stringing from prime to start
 - Retract → Lift → Wipe on edge → Lower to print position
-- Physically drags blob off nozzle on bed edge, eliminating stringing to print start
-- Result: Clean nozzle arrival at print position, no oozed filament transfer
 
 ### Setup Workflow:
 1. Create/verify material profiles in Cura (Settings → Manage Materials)
 2. Use v5.0 as Start G-code in printer settings
-3. Set up layer-specific temps in Cura profiles (initial_print_temp, print_temp)
-4. Select material in Cura before printing
-5. Cura injects correct temps automatically, manages layer transitions
-6. No manual editing ever needed
+3. Select material in Cura before printing
+4. Cura injects correct temps automatically
+5. No manual editing ever needed
 
 ### How to Verify It's Working:
 ```
