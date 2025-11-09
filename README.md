@@ -7,9 +7,7 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 **New to the repo?** Start here:
 1. **[DOCUMENTATION/QUICK_REFERENCE.md](DOCUMENTATION/QUICK_REFERENCE.md)** - Fast lookup for common tasks
 2. **[DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md)** - Printer specs and materials
-3. **[PROFILES/README.md](PROFILES/README.md)** - How to load profiles
-
-**All Documentation:** [DOCUMENTATION/README.md](DOCUMENTATION/README.md) (complete index)
+3. **[GCODE/README.md](GCODE/README.md)** - G-code optimizations
 
 ## 📋 Key Resources
 
@@ -19,8 +17,8 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 | Hardware & materials | [DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md) |
 | Using Copilot AI | [DOCUMENTATION/COPILOT_GUIDE.md](DOCUMENTATION/COPILOT_GUIDE.md) |
 | Version history | [CHANGELOG.md](CHANGELOG.md) |
-| G-code profiles | [PROFILES/README.md](PROFILES/README.md) |
-| Structure analysis | [REPOSITORY_REVIEW.md](REPOSITORY_REVIEW.md) |
+| G-code optimizations | [GCODE/README.md](GCODE/README.md) & [GCODE/CHANGELOG.md](GCODE/CHANGELOG.md) |
+| Cura profiles | [PROFILES/README.md](PROFILES/README.md) |
 
 ## Printer Setup
 - **Printer**: Creality Ender-3 V2
@@ -32,30 +30,32 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 
 ```
 MINDCUBBY-3D/
-├── README.md                       # This file - main overview
-├── CHANGELOG.md                    # Version history and changes
-├── REPOSITORY_REVIEW.md            # Structure analysis
+├── README.md                       # This file
+├── CHANGELOG.md                    # Main version history
 │
-├── DOCUMENTATION/                  # 📚 All guides & references
-│   ├── README.md                  # Documentation index
+├── DOCUMENTATION/                  # 📚 Guides & references
+│   ├── README.md                  # Doc index
 │   ├── QUICK_REFERENCE.md         # Fast lookup (START HERE!)
-│   ├── PRINTER_SPECS.md           # Hardware & material profiles
-│   ├── COPILOT_GUIDE.md           # Using AI for documentation
-│   └── [Coming soon: TROUBLESHOOTING, MAINTENANCE, VERSION]
+│   ├── PRINTER_SPECS.md           # Hardware & materials
+│   ├── COPILOT_GUIDE.md           # AI documentation helper
+│   ├── REPOSITORY_REVIEW.md       # Structure analysis (reference)
+│   └── MARKDOWN_CONSOLIDATION.md  # Consolidation notes (reference)
 │
-├── PROFILES/                       # G-code profiles & optimization
+├── PROFILES/                       # Cura G-code profiles
 │   ├── README.md
 │   ├── Ender3V2_Baseline_StartGCode.gcode
 │   └── Ender3V2_BLTouch_Optimized.txt
 │
-├── GCODE/                          # Sliced print files
-├── MODELS/                         # STL/OBJ 3D models
-├── .github/
-│   ├── chatmodes/
-│   │   └── Ender-3 V2.chatmode.md # Custom chat mode
-│   └── workflows/
+├── GCODE/                          # G-code optimization experiments
+│   ├── README.md
+│   ├── CHANGELOG.md               # Optimization history
+│   ├── Original_StartGCode_Archive.gcode
+│   └── Optimized_StartGCode_v1.gcode
 │
-└── .gitignore                      # Git configuration
+├── MODELS/                         # 3D model files (STL/OBJ)
+└── .github/
+    └── chatmodes/
+        └── Ender-3 V2.chatmode.md
 ```
 
 ## Quick Start

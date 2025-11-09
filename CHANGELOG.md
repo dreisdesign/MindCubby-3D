@@ -8,24 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- DOCUMENTATION/COPILOT_GUIDE.md - Consolidated guide for Copilot usage
-- DOCUMENTATION/QUICK_REFERENCE.md - Fast lookup guide with checklists
-- DOCUMENTATION/README.md - Documentation index and navigation guide
-- MARKDOWN_CONSOLIDATION.md - Analysis of documentation consolidation
+- GCODE/README.md - Guide for G-code optimization experiments
+- GCODE/CHANGELOG.md - Track G-code version improvements
+- GCODE/Original_StartGCode_Archive.gcode - Baseline for reference
+- GCODE/Optimized_StartGCode_v1.gcode - First optimization: 2-line parallel priming
 
 ### Changed
-- Consolidated AGENT_MODE_GUIDE.md and COPILOT_DOCUMENTATION_GUIDE.md into single DOCUMENTATION/COPILOT_GUIDE.md
-- Reorganized documentation structure with DOCUMENTATION/ as primary hub
-- Updated main README.md for better navigation and clarity
-- Updated chat mode to reference new documentation structure
-- Cleaned up root directory by moving guides to DOCUMENTATION/
+- Moved analysis docs to DOCUMENTATION/ (REPOSITORY_REVIEW.md, MARKDOWN_CONSOLIDATION.md)
+- Cleaner root directory - focus on essential files
+- Updated README.md with better resource links
+- Reorganized repository structure for clarity
 
-### Deprecated
-- AGENT_MODE_GUIDE.md (moved to DOCUMENTATION/COPILOT_GUIDE.md)
-- COPILOT_DOCUMENTATION_GUIDE.md (moved to DOCUMENTATION/COPILOT_GUIDE.md)
-
-### Removed
-- Duplicate content from Copilot guides (consolidated)
+### Optimization: v1.0 Improved Priming
+- **Change**: Priming sequence now uses 2 parallel lines in same direction (Y-axis)
+- **Benefit**: Cleaner nozzle at start of print, less messy primer appearance
+- **File**: GCODE/Optimized_StartGCode_v1.gcode
 
 ### Changed
 - Merged remote README with local documentation
