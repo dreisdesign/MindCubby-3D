@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repository structure with GCODE, DOCUMENTATION, and PROFILES directories
 - .gitignore configuration for 3D printing projects
 - GitHub repository integration
+- CHANGELOG.md for version tracking
+- COPILOT_DOCUMENTATION_GUIDE.md for documentation maintenance
+- AGENT_MODE_GUIDE.md for autonomous repository management with Copilot
+- Baseline G-code reference file (Ender3V2_Baseline_StartGCode.gcode)
 
 ### Changed
 - Merged remote README with local documentation

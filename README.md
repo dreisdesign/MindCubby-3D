@@ -6,6 +6,7 @@ Repository for 3D printing projects, G-code files, and printer configurations.
 
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history and all changes
 - **[COPILOT_DOCUMENTATION_GUIDE.md](COPILOT_DOCUMENTATION_GUIDE.md)** - How to maintain docs with GitHub Copilot
+- **[AGENT_MODE_GUIDE.md](AGENT_MODE_GUIDE.md)** - Use Copilot Agent Mode for autonomous repository management
 - **[DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md)** - Printer specs and material profiles
 - **[PROFILES/README.md](PROFILES/README.md)** - Cura profile setup instructions
 

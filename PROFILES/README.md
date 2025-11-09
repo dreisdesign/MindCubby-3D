@@ -4,7 +4,15 @@ Store your optimized Cura profiles here.
 
 ## Files
 
+- `Ender3V2_Baseline_StartGCode.gcode` - Original baseline start G-code (reference/rollback)
 - `Ender3V2_BLTouch_Optimized.txt` - Optimized start/end G-code with BLTouch support
+
+## Baseline Reference
+
+The baseline file preserves your original working G-code configuration. Use this for:
+- Comparing with optimized versions
+- Rolling back if new profiles don't work well
+- Understanding what changed between versions
 
 ## How to Use in Cura
 
@@ -20,3 +28,11 @@ Store your optimized Cura profiles here.
 ## Creating New Profiles
 
 Use the `Ender3V2_BLTouch_Optimized` as a base template for new material/quality profiles.
+
+## Profile Versioning
+
+When creating new profiles:
+- Keep the baseline as reference
+- Document changes in CHANGELOG.md
+- Name profiles descriptively: `Ender3V2_[Material]_[Purpose].txt`
+- Add comments describing key differences from baseline
