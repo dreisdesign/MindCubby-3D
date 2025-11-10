@@ -1,51 +1,24 @@
-; Ender 3 V2 - Production Start G-Code
-; Status: PRODUCTION BASELINE (as of 2025-11-09)
-; Material: Multi-material (uses Cura variables)
-; 
-; Features:
-;   • Parallel heating (bed + nozzle simultaneously)
-;   • Universal material profiles (PLA/PETG/TPU)
-;   • Optimized prime lines (2x parallel, same direction)
-;   • Nozzle wipe on bed edge (eliminates stringing)
-;   • BLTouch auto-leveling
-;
-; To use: Paste into Cura → Printer Settings → Machine Settings → Start G-Code
-; Material temps are auto-injected by Cura based on material selection
+; Minimal factory-style start G-code
+; Purpose: simple, reliable boot sequence without priming/wipe logic
+;   - Sets temps via Cura variables
+;   - Homes axes
+;   - Waits for bed and nozzle (safe blocking waits)
+;   - Resets extruder and lifts Z to printing height
 
-; Universal parallel heating - uses Cura-injected material temps
-M104 S{material_print_temperature} ; Preheat nozzle (non-blocking)
-M190 S{material_bed_temperature} ; Heat bed and wait
+M104 S{material_print_temperature} ; Set nozzle temp (non-blocking)
+M140 S{material_bed_temperature}    ; Set bed temp (non-blocking)
+
+G28                                ; Home all axes
+M190 S{material_bed_temperature}   ; Wait for bed to reach temp
 M109 S{material_print_temperature} ; Wait for nozzle to reach temp
 
-; Home and probe
-G92 E0 ; Reset Extruder
-G28 ; Home all axes
-G29 ; BLTouch auto-level
+G92 E0 ; Reset extruder
+G1 Z2.0 F3000 ; Lift to safe height and begin
 
-G1 Z2.0 F3000 ; Move Z Axis up to prevent scratching
-G1 X0.1 Y20 Z0.3 F5000.0 ; Move to start position
-
-; Prime line 1: Left side (bottom->top), extrude 15mm
-G1 X5 Y20 Z0.3 F5000.0 ; Move to left prime start
-G1 X5 Y200.0 Z0.3 F1500.0 E15 ; Prime up the left side
-
-; Travel to right prime start
-G1 X215 Y200.0 Z0.3 F5000.0 ; Move across to right side
-
-; Prime line 2: Right side (top->bottom), extrude 15mm
-G1 X215 Y20 Z0.3 F1500.0 E15 ; Prime down the right side
-; Retract before travel to wipe (prevents stringing during travel)
-G1 E-5 F2400 ; Retract 5mm at 2400 mm/min
-G1 Z5.0 F3000 ; Move up to clear bed
-G1 X220 Y5 Z5.0 F5000.0 ; Travel to wipe location at safe height
-
-; Lower and restore extrusion before starting skirt
-G1 Z0.3 F3000 ; Lower to wipe/first-layer height
-G1 E5 F2400 ; Prime/un-retract 5mm to restore extrusion
-; Purge squiggle on bed edge to deposit filament and prevent nozzle buildup
-; (small segments so filament is left on the bed, not collected on the nozzle)
-G1 X200 Y5 Z0.3 F1200.0 E0.6
-G1 X210 Y10 E0.9 F1200.0
-G1 X215 Y5 E0.6 F1200.0
-G1 X210 Y0 E0.4 F1200.0
-G92 E0 ; Reset extruder distance to 0 for printing
+; Note: This start sequence intentionally avoids priming/wiping.
+; If needed, use Cura's skirt/brim settings to prime the nozzle during the first layer.
+; Front-edge purge: deposit a line from front-left corner to front-right to prime nozzle
+G1 X5 Y5 Z0.3 F5000.0 ; Move to front-left corner
+G1 E0.2 F2400 ; Small initial prime
+G1 X200 Y5 Z0.3 F1500.0 E10 ; Purge line across front edge to lay filament down
+G92 E0 ; Reset extruder after purge so skirt starts with E=0
