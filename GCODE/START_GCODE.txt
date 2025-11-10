@@ -20,5 +20,6 @@ G1 Z2.0 F3000 ; Lift to safe height and begin
 ; Front-edge purge: deposit a line from front-left corner to front-right to prime nozzle
 G1 X5 Y5 Z0.3 F5000.0 ; Move to front-left corner
 G1 E0.2 F2400 ; Small initial prime
-G1 X200 Y5 Z0.3 F1500.0 E10 ; Purge line across front edge to lay filament down
+G1 X200 Y5 Z0.3 F1500.0 E6 ; Purge line across front edge to lay filament down (reduced)
+G4 P150 ; Short dwell to let purge bead set on the bed
 G92 E0 ; Reset extruder after purge so skirt starts with E=0
