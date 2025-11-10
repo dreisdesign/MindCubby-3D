@@ -42,6 +42,10 @@ G1 X220 Y5 Z5.0 F5000.0 ; Travel to wipe location at safe height
 ; Lower and restore extrusion before starting skirt
 G1 Z0.3 F3000 ; Lower to wipe/first-layer height
 G1 E5 F2400 ; Prime/un-retract 5mm to restore extrusion
+; Purge squiggle on bed edge to deposit filament and prevent nozzle buildup
+; (small segments so filament is left on the bed, not collected on the nozzle)
+G1 X200 Y5 Z0.3 F1200.0 E0.6
+G1 X210 Y10 E0.9 F1200.0
+G1 X215 Y5 E0.6 F1200.0
+G1 X210 Y0 E0.4 F1200.0
 G92 E0 ; Reset extruder distance to 0 for printing
-; Small wipe move to ensure clean nozzle (extra insurance)
-G1 X200 Y5 E2 F1500.0
