@@ -18,7 +18,7 @@ G1 Z2.0 F3000 ; Lift to safe height and begin
 ; Note: This start sequence intentionally avoids priming/wiping.
 ; If needed, use Cura's skirt/brim settings to prime the nozzle during the first layer.
 ; Front-edge purge: deposit a line from front-left corner to front-right to prime nozzle
-G1 X5 Y5 Z0.3 F5000.0 ; Move to front-left corner
+G1 X5 Y5 Z0.3 F9000.0 ; Move to front-left corner (travel speed increased to 150 mm/s)
 G1 E0.2 F2400 ; Small initial prime
 G1 X200 Y5 Z0.3 F1500.0 E6 ; Purge line across front edge to lay filament down (reduced)
 G4 P150 ; Short dwell to let purge bead set on the bed
