@@ -32,10 +32,14 @@ G1 X0.4 Y200.0 Z0.3 F5000.0
 
 ; Prime line 2: Y direction (same direction as line 1), extrude 15mm
 G1 X0.4 Y20 Z0.3 F1500.0 E15
-G92 E0 ; Reset Extruder
-
-; Wipe nozzle clean on bed edge to remove blob
-G1 E-0.5 F2400 ; Retract slightly to prevent oozing
+; Retract before travel to wipe (prevents stringing during travel)
+G1 E-5 F2400 ; Retract 5mm at 2400 mm/min
 G1 Z5.0 F3000 ; Move up to clear bed
-G1 X220 Y5 Z0.3 F5000.0 ; Travel and wipe across bed edge
-G1 Z0.3 F3000 ; Move back to first layer height
+G1 X220 Y5 Z5.0 F5000.0 ; Travel to wipe location at safe height
+
+; Lower and restore extrusion before starting skirt
+G1 Z0.3 F3000 ; Lower to wipe/first-layer height
+G1 E5 F2400 ; Prime/un-retract 5mm to restore extrusion
+G92 E0 ; Reset extruder distance to 0 for printing
+; Small wipe move to ensure clean nozzle (extra insurance)
+G1 X200 Y5 E2 F1500.0
