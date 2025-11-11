@@ -99,6 +99,17 @@ Quick verification steps after pulling the repo or updating your Machine Setting
 
 If you still see oozing, try raising the purge Z slightly (0.35–0.40 mm), increase retract to 2.0 mm, or increase retract speed in Cura (45–60 mm/s). Avoid committing personal `M851` values — keep offsets in EEPROM only.
 
+### Cancel behavior and safe park (Cura USB)
+
+Note: when cancelling a print from Cura over USB, Cura may not always execute the full End G-code sequence before stopping the job. To reduce risk of the nozzle remaining low over the print after a cancel, the repository's active end G-code now explicitly raises Z to 20 mm before parking at a safe front-left position (`CURA-SETTINGS/active/END_GCODE.txt` uses `G1 Z20` then `G1 X30 Y20`).
+
+Quick checks and options:
+1. If you prefer a different park location, edit `CURA-SETTINGS/active/END_GCODE.txt` and change the `G1 X30 Y20` line to your preferred X/Y (and adjust Z lift if needed).
+2. To test cancel behavior safely, run a short print, cancel from Cura, and watch whether the head lifts before moving to the park coordinates. If it doesn't, increase the Z lift in the end G-code.
+3. Some hosts or firmware pause/abort behavior can vary — adding an explicit Z lift before any XY park is the most reliable defensive change.
+
+This change was added deliberately so cancels initiated from Cura (USB) leave the nozzle raised and parked away from the print.
+
 ### Nozzle Oozing During Print
 **Symptom**: Drips or blobs falling from nozzle
 
