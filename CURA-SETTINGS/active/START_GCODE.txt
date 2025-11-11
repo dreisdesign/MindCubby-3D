@@ -10,6 +10,7 @@ M109 S{material_print_temperature} ; Wait for nozzle
 
 G92 E0 ; Reset extruder
 G28 ; Home all axes
+M82 ; Set extruder to absolute mode (required so absolute E moves in priming work)
 ; Enable saved BLTouch mesh so skirt/prime use mesh compensation (saved mesh: MRISCOC)
 M420 S1 ; Enable mesh from EEPROM
 ; If you prefer to re-probe each print, replace the above with G29 (takes longer)
