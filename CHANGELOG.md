@@ -22,6 +22,15 @@ All changes to the MINDCUBBY-3D repository.
 - `Optimized_StartGCode_v1.gcode` - First optimization iteration
 - Conflict resolution in README.md during initial push
 
+## [1.0.1] - 2025-11-10
+
+### Added
+- `GCODE/Optimized_StartGCode_v6.gcode` — New start G-code variant that lowers the initial Z used for priming/skirt (0.15 mm) to improve first-layer adhesion when prints otherwise require a manual Z-offset adjustment after the skirt.
+
+### Notes
+- This change is non-destructive to the baseline files. Use `Ender3V2_Baseline_StartGCode.gcode` for rollback. If you have a probe, consider enabling mesh leveling (G29) or using a saved mesh (M420 S1) before priming.
+
+
 ---
 
 ## Guidelines for Updates

@@ -82,6 +82,12 @@ Fast lookup for common tasks, checklists, and keyboard shortcuts.
 3. **Check nozzle distance**: Should be paper-thin height
 4. **Verify first-layer temp**: Usually 5°C lower than normal
 
+### Active start G-code & archived baseline
+
+The repository's active start G-code is `GCODE/START_GCODE.txt` (this is the version currently tested and confirmed working). The original baseline start G-code has been archived to `GCODE/_archive/Ender3V2_Baseline_StartGCode.gcode` to avoid accidental use while preserving it for rollback and comparison.
+
+If you switch start G-codes, always re-run a skirt test to validate first-layer adhesion and that your saved BLTouch mesh (if used) is enabled before skirt moves.
+
 ### Nozzle Oozing During Print
 **Symptom**: Drips or blobs falling from nozzle
 
@@ -177,6 +183,37 @@ Fast lookup for common tasks, checklists, and keyboard shortcuts.
 1. Run `G29` twice
 2. Check bed surface for debris
 3. Verify sensor is clean
+
+### BLTouch: saved mesh & Z-offset (MRISCOC)
+
+If you have a saved mesh (for example: `MRISCOC`) and a BLTouch probe, enable the mesh before the priming/skirt moves so the skirt and first layer use the same compensated height.
+
+Quick enable (fast; recommended if you already saved a mesh):
+1. Home: `G28`
+2. Enable saved mesh: `M420 S1`  ; applies mesh compensation from EEPROM
+
+Example (quick terminal sequence to validate):
+```
+G28
+M420 S1
+G1 Z2.0 F3000
+G1 X110 Y20 Z0.15 F5000 ; move to prime start position used by Optimized_StartGCode_v6.gcode
+```
+
+Measure and save a persistent probe offset (only after confirming with paper test):
+1. Home: `G28`
+2. Move nozzle to center and lower slowly until paper drag is correct
+3. Set probe offset (replace -1.28 with your measured value):
+   `M851 Z-1.28`
+4. Save to EEPROM: `M500`
+
+Notes & safety:
+- `M420 S1` only enables a saved mesh; it does not change offsets by itself.  
+- If you prefer re-probing every print, replace `M420 S1` with `G29` (takes longer).  
+- Avoid committing personal `M851` values to the repo — keep offsets local and save to EEPROM instead.  
+- `G92` can be used as a per-print temporary coordinate shift but use with caution (non-persistent).
+
+See `GCODE/Optimized_StartGCode_v6.gcode` — this start G-code enables a saved mesh (`M420 S1`) and uses a lowered Z for skirt/priming to improve first-layer adhesion for many setups.
 
 ### Nozzle Problems
 

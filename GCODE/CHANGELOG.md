@@ -134,3 +134,32 @@ Parallel (v4.0):     |--Bed Heat---|
 - File: `Ender3V2_Baseline_StartGCode.gcode`
 - Use for comparison/rollback
 - Archive: `Original_StartGCode_Archive.gcode`
+
+---
+
+## v6.0 - Adhesion fix: lower initial Z for priming/skirt (2025-11-10)
+**Purpose**: Improve first-layer adhesion for problematic prints that require a manual Z-offset change after priming.
+**Change**: Added `Optimized_StartGCode_v6.gcode` which uses a lower Z (0.15 mm) for the priming/skirt moves so the first printed lines have better squish against the bed.
+**When to use**: If your prints show poor adhesion on the first layer but improve when you manually lower the Z offset after the skirt.
+**Notes & recommendations**:
+- If you use a probe (BLTouch), run `G28` then `G29` (or `M420 S1` for saved mesh) prior to the priming moves.
+- For persistent offsets, measure and set probe offset using `M851 Z<offset>` and `M500` to save to EEPROM (do not place personal offsets in repo files).
+**File**: `Optimized_StartGCode_v6.gcode`
+
+## v6.1 - Prime cleanup: retract + wipe (2025-11-10)
+**Purpose**: Prevent small oozed filament blobs from getting caught on the nozzle between prime passes.
+**Change**: Reduced priming extrusion volumes and added a small retract + wipe sequence (lift to Z5, wipe across bed edge) in `Optimized_StartGCode_v6.gcode` to clear residual filament after priming.
+**When to use**: Use `Optimized_StartGCode_v6.gcode` when you observe small blobs being dragged on subsequent skirt/pass movements.
+**Notes**:
+- Retract amount in the start G-code is conservative (1 mm); tune locally if needed.
+- If using a probe, ensure mesh is enabled (`M420 S1`) before priming so wipe and skirt use compensated heights.
+
+## v6.2 - Sacrificial micro-prime (2025-11-10)
+**Purpose**: Remove any remaining ooze before the first-layer moves so the nozzle doesn't catch residual filament.
+**Change**: Increased retract to 1.5 mm after the wipe and added a short sacrificial micro-prime at the safe start area (Z0.15, E0.8) followed by a retract and E reset. This deposits any remaining ooze off-print so the first layer starts clean.
+**Notes**:
+- The micro-prime amount (E0.8) and retract (1.5 mm) are conservative; tune locally by small increments if needed.
+- If the sacrificial area smears too much, adjust the X/Y wipe coordinates or reduce E value.
+
+
+
