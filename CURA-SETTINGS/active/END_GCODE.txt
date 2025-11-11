@@ -8,8 +8,9 @@ G1 E-2 Z0.2 F2400 ; Retract another 2mm and raise Z 0.2mm
 G1 Z20 F3000 ; Raise Z axis 20mm total (clear print)
 
 G90 ; Switch back to Absolute positioning
-; Park at a safe front-left spot (raise Z first so cancel from host won't leave nozzle low)
-G1 X30 Y20 F5000 ; Park nozzle at front-left (safe access)
+; Park at a safe front-left spot: move bed forward (Y to machine_depth) then X to user-friendly access
+; Z has already been raised to 20mm above print so head is clear
+G1 X30 Y{machine_depth} F5000 ; Park nozzle at front-left (move bed forward for access)
 M106 S0 ; Turn-off cooling fan
 M104 S180 ; Nozzle to 180°C (warm standby)
 M140 S70 ; Bed to 70°C (warm standby)
