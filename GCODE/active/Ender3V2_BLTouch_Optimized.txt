@@ -1,0 +1,26 @@
+M140 S70
+M105
+M190 S70
+M104 S225
+M105
+M109 S225
+G92 E0
+G28
+G29
+G1 Z2.0 F3000
+G1 X0.1 Y20 Z0.3 F5000.0
+G1 X0.1 Y200.0 Z0.3 F1500.0 E15
+G1 X0.4 Y200.0 Z0.3 F5000.0
+G1 X0.4 Y20 Z0.3 F1500.0 E30
+G92 E0
+G1 Z2.0 F3000
+G1 X5 Y20 Z0.3 F5000.0
+M82
+G92 E0
+G92 E0
+G1 F2700 E-5
+
+; --- Wipe and Travel ---
+G1 Z2.0 F3000 ; Lift Z
+G1 X10 Y10 F5000 ; A quick diagonal move to wipe and position for print
+; --- End Wipe and Travel ---

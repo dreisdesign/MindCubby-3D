@@ -30,6 +30,12 @@ All changes to the MINDCUBBY-3D repository.
 ### Notes
 - This change is non-destructive to the baseline files. Use `Ender3V2_Baseline_StartGCode.gcode` for rollback. If you have a probe, consider enabling mesh leveling (G29) or using a saved mesh (M420 S1) before priming.
 
+## [1.0.2] - 2025-11-10
+
+### Changed
+- Reorganized `GCODE/` into `active/`, `variants/`, and `archived/` to make it easier to find the currently used start/end code, optimized variants, and historical archives. Updated docs to reference `GCODE/active/START_GCODE.txt` as the active start file.
+
+
 
 ---
 

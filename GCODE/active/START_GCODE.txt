@@ -1,0 +1,26 @@
+; Ender 3 V2 - Optimized Start G-code (active)
+; Purpose: Improve first-layer adhesion by applying a lower initial Z for priming/skirt
+; Date: 2025-11-10
+; Notes: Active start G-code used by repository
+
+M140 S{material_bed_temperature} ; Set bed temp (non-blocking)
+M104 S{material_print_temperature} ; Set nozzle temp (non-blocking)
+M190 S{material_bed_temperature} ; Wait for bed
+M109 S{material_print_temperature} ; Wait for nozzle
+
+G92 E0 ; Reset extruder
+G28 ; Home all axes
+; Enable saved BLTouch mesh so skirt/prime use mesh compensation (saved mesh: MRISCOC)
+M420 S1 ; Enable mesh from EEPROM
+; If you prefer to re-probe each print, replace the above with G29 (takes longer)
+
+G1 Z2.0 F3000 ; Lift Z a little
+G1 X0.1 Y20 Z0.15 F5000.0 ; Move to start position - lowered Z (0.15 mm)
+G1 X0.1 Y200.0 Z0.15 F1500.0 E15 ; Draw the first prime line (prime)
+G1 X0.4 Y200.0 Z0.15 F5000.0 ; Move to side a little
+G1 X0.4 Y20 Z0.15 F1500.0 E30 ; Draw the second prime line
+G92 E0 ; Reset Extruder
+G1 Z2.0 F3000 ; Move Z up a bit after priming
+G1 X30 Y20 Z2.0 F5000.0 ; Move over to safe print start area
+
+; Ready to start print - printer should now align first layer closer to bed for better adhesion
