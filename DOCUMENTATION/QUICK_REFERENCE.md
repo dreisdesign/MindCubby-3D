@@ -84,7 +84,7 @@ Fast lookup for common tasks, checklists, and keyboard shortcuts.
 
 ### Active start G-code & archived baseline
 
-The repository's active start G-code is `GCODE/active/START_GCODE.txt` (this is the version currently tested and confirmed working). The original baseline start G-code has been archived to `GCODE/archived/Ender3V2_Baseline_StartGCode.gcode` to avoid accidental use while preserving it for rollback and comparison.
+The repository's active start G-code is `CURA-SETTINGS/active/START_GCODE.txt` (this is the version currently tested and confirmed working). The original baseline start G-code has been archived to `CURA-SETTINGS/archived/Ender3V2_Baseline_StartGCode.gcode` to avoid accidental use while preserving it for rollback and comparison.
 
 If you switch start G-codes, always re-run a skirt test to validate first-layer adhesion and that your saved BLTouch mesh (if used) is enabled before skirt moves.
 
@@ -93,7 +93,7 @@ If you switch start G-codes, always re-run a skirt test to validate first-layer 
 The active `START_GCODE.txt` was updated to perform priming off the model area (corner/back-edge purge) and to include a retract → lift → wipe → micro-prime sequence. This prevents the nozzle from collecting filament blobs on the purge line and dragging them across the first layer.
 
 Quick verification steps after pulling the repo or updating your Machine Settings:
-1. Confirm the start G-code in Cura is `GCODE/active/START_GCODE.txt`.
+1. Confirm the start G-code in Cura is `CURA-SETTINGS/active/START_GCODE.txt`.
 2. Slice a small test (20×20 mm square) with 3 skirt lines and skirt distance 7–10 mm so the skirt doesn't intersect the purge corner.
 3. Export and open the G-code: ensure `M420 S1` appears before `;TYPE:SKIRT` and that the purge lines are at the bed edge (look for X10..X150 / Y200..Y205). Run the print and verify the purge/wipe happens off-print and the first skirt passes cleanly.
 
@@ -224,7 +224,7 @@ Notes & safety:
 - Avoid committing personal `M851` values to the repo — keep offsets local and save to EEPROM instead.  
 - `G92` can be used as a per-print temporary coordinate shift but use with caution (non-persistent).
 
-See `GCODE/Optimized_StartGCode_v6.gcode` — this start G-code enables a saved mesh (`M420 S1`) and uses a lowered Z for skirt/priming to improve first-layer adhesion for many setups.
+See `CURA-SETTINGS/variants/Optimized_StartGCode_v6.gcode` — this start G-code enables a saved mesh (`M420 S1`) and uses a lowered Z for skirt/priming to improve first-layer adhesion for many setups.
 
 ### Nozzle Problems
 

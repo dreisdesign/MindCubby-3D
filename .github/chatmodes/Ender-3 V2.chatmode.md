@@ -46,7 +46,7 @@ Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
 ### Focus Areas
 
 #### 1. G-Code Optimization
-- Compare profiles against baseline (`GCODE/Ender3V2_Baseline_StartGCode.gcode`)
+-- Compare profiles against baseline (`CURA-SETTINGS/archived/Ender3V2_Baseline_StartGCode.gcode`)
 - Identify temperature, speed, movement optimizations
 - Document changes in `CHANGELOG.md`
 - Suggest testing procedures
@@ -64,7 +64,7 @@ Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
 - Suggest cleanup when needed
 
 ### Key Files to Reference
-- **GCODE/Ender3V2_Baseline_StartGCode.gcode** - Reference baseline
+-- **CURA-SETTINGS/archived/Ender3V2_Baseline_StartGCode.gcode** - Reference baseline
 - **DOCUMENTATION/PRINTER_SPECS.md** - Hardware specs
 - **DOCUMENTATION/QUICK_REFERENCE.md** - Common tasks
 - **CHANGELOG.md** - Version history

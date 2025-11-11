@@ -12,7 +12,7 @@ All changes to the MINDCUBBY-3D repository.
 
 ### G-Code Optimization: v1.0 Improved Priming
 - **Change**: Priming sequence now uses 2 parallel lines in same direction (Y-axis)
-- **File**: `GCODE/Optimized_StartGCode_v1.gcode`
+ - **File**: `CURA-SETTINGS/variants/Optimized_StartGCode_v1.gcode`
 - **Benefit**: Cleaner nozzle appearance at print start
 - **Status**: Active
 
@@ -25,7 +25,7 @@ All changes to the MINDCUBBY-3D repository.
 ## [1.0.1] - 2025-11-10
 
 ### Added
-- `GCODE/Optimized_StartGCode_v6.gcode` — New start G-code variant that lowers the initial Z used for priming/skirt (0.15 mm) to improve first-layer adhesion when prints otherwise require a manual Z-offset adjustment after the skirt.
+- `CURA-SETTINGS/variants/Optimized_StartGCode_v6.gcode` — New start G-code variant that lowers the initial Z used for priming/skirt (0.15 mm) to improve first-layer adhesion when prints otherwise require a manual Z-offset adjustment after the skirt.
 
 ### Notes
 - This change is non-destructive to the baseline files. Use `Ender3V2_Baseline_StartGCode.gcode` for rollback. If you have a probe, consider enabling mesh leveling (G29) or using a saved mesh (M420 S1) before priming.
@@ -33,15 +33,15 @@ All changes to the MINDCUBBY-3D repository.
 ## [1.0.2] - 2025-11-10
 
 ### Changed
-- Reorganized `GCODE/` into `active/`, `variants/`, and `archived/` to make it easier to find the currently used start/end code, optimized variants, and historical archives. Updated docs to reference `GCODE/active/START_GCODE.txt` as the active start file.
+- Reorganized `CURA-SETTINGS/` into `active/`, `variants/`, and `archived/` to make it easier to find the currently used start/end code, optimized variants, and historical archives. Updated docs to reference `CURA-SETTINGS/active/START_GCODE.txt` as the active start file.
 
 ## [1.0.3] - 2025-11-11
 
 ### Fixed
-- `GCODE/active/START_GCODE.txt`: Moved priming off-print (corner/back-edge purge) and added a retract → lift → wipe → micro-prime sequence to prevent nozzle blobs being picked up and dragged across the first layer. This reduces first-layer failures caused by deposited blobs during skirt/priming.
+- `CURA-SETTINGS/active/START_GCODE.txt`: Moved priming off-print (corner/back-edge purge) and added a retract → lift → wipe → micro-prime sequence to prevent nozzle blobs being picked up and dragged across the first layer. This reduces first-layer failures caused by deposited blobs during skirt/priming.
 
 ### Files
-- `GCODE/active/START_GCODE.txt` — updated priming sequence
+- `CURA-SETTINGS/active/START_GCODE.txt` — updated priming sequence
 - `DOCUMENTATION/QUICK_REFERENCE.md` — documented the off-print purge and added verification steps
 
 

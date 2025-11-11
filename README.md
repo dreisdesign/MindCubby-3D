@@ -19,7 +19,7 @@ DOCUMENTATION/
 ├── QUICK_REFERENCE.md          # Tasks, troubleshooting, commands
 └── PRINTER_SPECS.md            # Hardware & material profiles
 
-GCODE/                           # All G-code files & optimizations (organized)
+CURA-SETTINGS/                   # Cura start/end G-code & slicer snippets (organized)
 ├── active/                      # Active start/end and commonly used files
 │   ├── START_GCODE.txt          # Currently active start G-code (tested)
 │   └── END_GCODE.txt            # Currently active end G-code
@@ -34,8 +34,8 @@ MODELS/                          # 3D print files (STL/OBJ)
 
 ## Quick Start
 
-1. Load profile from `GCODE/active/` (use `Ender3V2_BLTouch_Optimized.txt`)
-2. Paste start code from `GCODE/active/START_GCODE.txt`
+1. Load profile from `CURA-SETTINGS/active/` (use `START_GCODE_BLTOUCH_REPROBE.txt`)
+2. Paste start code from `CURA-SETTINGS/active/START_GCODE.txt`
 3. Check [DOCUMENTATION/QUICK_REFERENCE.md](DOCUMENTATION/QUICK_REFERENCE.md) for your material
 
 ## Latest Optimization

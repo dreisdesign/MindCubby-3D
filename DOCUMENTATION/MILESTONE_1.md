@@ -54,11 +54,11 @@
 
 ## Archive
 
-Old versions moved to `GCODE/_archive/`:
+Old versions moved to `CURA-SETTINGS/archived/`:
 - `Optimized_StartGCode_v1.gcode` through `v5.gcode`
 - `Optimized_EndGCode_v1.gcode`
 - `Ender3V2_Baseline_StartGCode.gcode`
-- `Ender3V2_BLTouch_Optimized.txt`
+-- `START_GCODE_BLTOUCH_REPROBE.txt`
 - `Original_StartGCode_Archive.gcode`
 
 **Reference**: Keep these for comparison/rollback if needed. They show the optimization journey.
