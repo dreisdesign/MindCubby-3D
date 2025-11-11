@@ -88,6 +88,17 @@ The repository's active start G-code is `GCODE/active/START_GCODE.txt` (this is 
 
 If you switch start G-codes, always re-run a skirt test to validate first-layer adhesion and that your saved BLTouch mesh (if used) is enabled before skirt moves.
 
+### Recent change — off-print purge to prevent nozzle blobs (2025-11-11)
+
+The active `START_GCODE.txt` was updated to perform priming off the model area (corner/back-edge purge) and to include a retract → lift → wipe → micro-prime sequence. This prevents the nozzle from collecting filament blobs on the purge line and dragging them across the first layer.
+
+Quick verification steps after pulling the repo or updating your Machine Settings:
+1. Confirm the start G-code in Cura is `GCODE/active/START_GCODE.txt`.
+2. Slice a small test (20×20 mm square) with 3 skirt lines and skirt distance 7–10 mm so the skirt doesn't intersect the purge corner.
+3. Export and open the G-code: ensure `M420 S1` appears before `;TYPE:SKIRT` and that the purge lines are at the bed edge (look for X10..X150 / Y200..Y205). Run the print and verify the purge/wipe happens off-print and the first skirt passes cleanly.
+
+If you still see oozing, try raising the purge Z slightly (0.35–0.40 mm), increase retract to 2.0 mm, or increase retract speed in Cura (45–60 mm/s). Avoid committing personal `M851` values — keep offsets in EEPROM only.
+
 ### Nozzle Oozing During Print
 **Symptom**: Drips or blobs falling from nozzle
 

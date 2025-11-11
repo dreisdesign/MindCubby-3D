@@ -35,6 +35,15 @@ All changes to the MINDCUBBY-3D repository.
 ### Changed
 - Reorganized `GCODE/` into `active/`, `variants/`, and `archived/` to make it easier to find the currently used start/end code, optimized variants, and historical archives. Updated docs to reference `GCODE/active/START_GCODE.txt` as the active start file.
 
+## [1.0.3] - 2025-11-11
+
+### Fixed
+- `GCODE/active/START_GCODE.txt`: Moved priming off-print (corner/back-edge purge) and added a retract → lift → wipe → micro-prime sequence to prevent nozzle blobs being picked up and dragged across the first layer. This reduces first-layer failures caused by deposited blobs during skirt/priming.
+
+### Files
+- `GCODE/active/START_GCODE.txt` — updated priming sequence
+- `DOCUMENTATION/QUICK_REFERENCE.md` — documented the off-print purge and added verification steps
+
 
 
 ---

@@ -15,12 +15,23 @@ M420 S1 ; Enable mesh from EEPROM
 ; If you prefer to re-probe each print, replace the above with G29 (takes longer)
 
 G1 Z2.0 F3000 ; Lift Z a little
-G1 X0.1 Y20 Z0.15 F5000.0 ; Move to start position - lowered Z (0.15 mm)
-G1 X0.1 Y200.0 Z0.15 F1500.0 E15 ; Draw the first prime line (prime)
-G1 X0.4 Y200.0 Z0.15 F5000.0 ; Move to side a little
-G1 X0.4 Y20 Z0.15 F1500.0 E30 ; Draw the second prime line
-G92 E0 ; Reset Extruder
+; --- Off-print purge + wipe to avoid dragging a blob onto the model ---
+; Move to a corner/back edge for priming (keeps nozzle work away from the print area)
+G1 X10 Y200 Z0.30 F5000.0 ; Move to purge corner (safe edge)
+G92 E0 ; Reset extruder to 0 for absolute E moves
+G1 Z0.30 F1200.0 ; Lower to purge height (slightly above final first-layer Z)
+G1 X150 Y200 Z0.30 F1500.0 E6.000 ; Short purge line (moderate extrusion)
+G1 E4.500 F1800.0 ; Retract 1.5mm to reduce ooze
+G1 Z0.60 F1200.0 ; Lift slightly after retract
+G1 X150 Y205 F5000.0 ; Small travel to wipe the nozzle off the purge line
+G1 X10 Y205 Z0.60 F1500.0 E5.000 ; Slow micro-prime back across (0.5mm re-extrude)
+G92 E0 ; Reset extruder again
 G1 Z2.0 F3000 ; Move Z up a bit after priming
 G1 X30 Y20 Z2.0 F5000.0 ; Move over to safe print start area
+
+; Notes:
+; - The purge happens off to the side (X10..X150 at Y200/205), away from the print area so any blob is not dragged across the model.
+; - Extrusion quantities were reduced and a retract + micro-prime sequence added to minimize pickup.
+; - If your printer still oozes, increase the retract in Cura (or add a short coast) and/or raise the purge Z slightly (0.35-0.40 mm).
 
 ; Ready to start print - printer should now align first layer closer to bed for better adhesion
