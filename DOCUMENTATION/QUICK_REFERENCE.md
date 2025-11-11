@@ -84,7 +84,7 @@ Fast lookup for common tasks, checklists, and keyboard shortcuts.
 
 ### Active start G-code & archived baseline
 
-The repository's active start G-code is `GCODE/START_GCODE.txt` (this is the version currently tested and confirmed working). The original baseline start G-code has been archived to `GCODE/_archive/Ender3V2_Baseline_StartGCode.gcode` to avoid accidental use while preserving it for rollback and comparison.
+The repository's active start G-code is `GCODE/active/START_GCODE.txt` (this is the version currently tested and confirmed working). The original baseline start G-code has been archived to `GCODE/archived/Ender3V2_Baseline_StartGCode.gcode` to avoid accidental use while preserving it for rollback and comparison.
 
 If you switch start G-codes, always re-run a skirt test to validate first-layer adhesion and that your saved BLTouch mesh (if used) is enabled before skirt moves.
 
