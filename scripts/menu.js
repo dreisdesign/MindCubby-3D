@@ -104,32 +104,27 @@ function executeAction(action) {
     }
 
     case 'generate-specs': {
-      const promptPath = () => {
-        rl.question('📁 Enter directory path (default: PRINTABLES): ', (dir) => {
-          const targetDir = dir.trim() || 'PRINTABLES';
-          const fullPath = path.join(repoRoot, targetDir);
+      const targetDir = 'PRINTABLES';
+      const fullPath = path.join(repoRoot, targetDir);
 
-          if (!fs.existsSync(fullPath)) {
-            console.log(`\n❌ Directory not found: ${fullPath}\n`);
-            setTimeout(showMenu, 1500);
-            return;
-          }
+      if (!fs.existsSync(fullPath)) {
+        console.log(`\n❌ Directory not found: ${fullPath}\n`);
+        setTimeout(showMenu, 1500);
+        return;
+      }
 
-          try {
-            console.log(`\n🔍 Generating specs for: ${targetDir}\n`);
-            execSync(`python3 ${repoRoot}/scripts/gcode_specs.py "${fullPath}"`, {
-              cwd: repoRoot,
-              stdio: 'inherit',
-            });
-            console.log('\n✅ Done!\n');
-            setTimeout(showMenu, 2000);
-          } catch (error) {
-            console.error(`\n❌ Error: ${error.message}\n`);
-            setTimeout(showMenu, 2000);
-          }
+      try {
+        console.log(`\n🔍 Generating specs for: ${targetDir}\n`);
+        execSync(`python3 ${repoRoot}/scripts/gcode_specs.py "${fullPath}"`, {
+          cwd: repoRoot,
+          stdio: 'inherit',
         });
-      };
-      promptPath();
+        console.log('\n✅ Done!\n');
+        setTimeout(showMenu, 2000);
+      } catch (error) {
+        console.error(`\n❌ Error: ${error.message}\n`);
+        setTimeout(showMenu, 2000);
+      }
       break;
     }
 
