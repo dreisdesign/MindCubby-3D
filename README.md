@@ -32,9 +32,8 @@ Stages changes, auto-generates specs, commits, and pushes—all in one command!
 
 | Need | File |
 |------|------|
-| **Automated Workflow** | [DOCUMENTATION/WORKFLOW.md](DOCUMENTATION/WORKFLOW.md) |
-| Common tasks & fixes | [DOCUMENTATION/QUICK_REFERENCE.md](DOCUMENTATION/QUICK_REFERENCE.md) |
-| Printer specs & materials | [DOCUMENTATION/PRINTER_SPECS.md](DOCUMENTATION/PRINTER_SPECS.md) |
+| **Commands & Workflows** | [DOCUMENTATION/REFERENCE.md](DOCUMENTATION/REFERENCE.md) |
+| **Setup & Troubleshooting** | [DOCUMENTATION/SETUP.md](DOCUMENTATION/SETUP.md) |
 | Changes & history | [CHANGELOG.md](CHANGELOG.md) |
 
 ## 📊 Repository Contents
@@ -50,10 +49,9 @@ Stages changes, auto-generates specs, commits, and pushes—all in one command!
 
 ```
 DOCUMENTATION/
-├── WORKFLOW.md                 # ⭐ Complete automation guide
-├── QUICK_REFERENCE.md          # Tasks, troubleshooting, commands
-├── PRINTER_SPECS.md            # Hardware & material profiles
-└── CURA_PROFILE_MANAGEMENT.md  # Profile setup
+├── REFERENCE.md                # Quick commands & workflows
+├── SETUP.md                    # Printer config, materials, troubleshooting
+└── README.md (root)            # This file - project overview
 
 PRINTABLES/                      # Projects ready for Printables
 ├── PRINTABLES_01. Ghost/
