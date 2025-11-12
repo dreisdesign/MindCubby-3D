@@ -2,25 +2,86 @@
 
 All changes to the MINDCUBBY-3D repository.
 
-## [1.0.0] - 2025-11-09
+## [2.0.0] - 2025-11-12
 
-### Initial Release
-- Repository initialized with Ender-3 V2 documentation
-- GCODE optimization experiments directory
-- PROFILES/ with BLTouch optimized configuration
-- DOCUMENTATION/ with quick reference and printer specs
+### Complete Automation System ⚡
+Major release with comprehensive automation for print-to-Printables workflow.
 
-### G-Code Optimization: v1.0 Improved Priming
-- **Change**: Priming sequence now uses 2 parallel lines in same direction (Y-axis)
- - **File**: `CURA-SETTINGS/variants/Optimized_StartGCode_v1.gcode`
-- **Benefit**: Cleaner nozzle appearance at print start
-- **Status**: Active
+#### Features
+- **Automated Spec Generation** - Extract weight, time, temps from G-code
+  - Parses nozzle/bed temperature from G-code comments
+  - Calculates filament weight (1.25g per meter standard)
+  - Extracts print time from `;TIME:` metadata
+  - Generates markdown tables ready for Printables
+  
+- **Smart Change Detection** - Only regenerate changed files
+  - Compares `.gcode` vs `_printables-description.md` modification times
+  - Skip unchanged files (47 files in ~1 sec if all unchanged)
+  - Reduces redundant processing
+  
+- **Git Integration** - Auto-generate specs on commit
+  - Pre-commit hooks trigger spec generation
+  - Updated files auto-staged before commit
+  - Transparent to user workflow
+  
+- **Interactive CLI Menu** - Beautiful terminal UI
+  - 8 options for common tasks
+  - Arrow key navigation
+  - Real-time git integration
+  - One-command workflows
 
-### Repository Structure
-- `Ender3V2_Baseline_StartGCode.gcode` - Reference baseline
-- `Original_StartGCode_Archive.gcode` - Original working version
-- `Optimized_StartGCode_v1.gcode` - First optimization iteration
-- Conflict resolution in README.md during initial push
+#### Commands
+- `npm run menu` - Interactive CLI menu
+- `npm run p` - Quick spec generation (PRINTABLES folder)
+- `npm run specs [dir]` - Generate specs for directory  
+- `gcode-commit "msg"` - One-line commit with auto specs
+- `npm run commit` - Alternative commit method
+
+#### Files Added
+- `DOCUMENTATION/WORKFLOW.md` - Complete automation guide
+- `scripts/gcode_specs.py` - Enhanced with weight/time extraction
+- `scripts/menu.js` - Interactive CLI with arrow navigation
+- `scripts/gcode-commit.sh` - Quick commit helper
+- `.githooks/pre-commit` - Auto-generation hook
+
+#### Files Updated
+- `README.md` - New quick start and automation focus
+- `.gitignore` - Track `.md`, `.3mf`, `.stl` specs and models
+- `package.json` - New npm scripts and dependencies
+
+#### Repository Cleanup
+- Removed 31 media files from tracking (images, videos, PDFs)
+- Removed old `.txt` spec files (replaced with `.md`)
+- Final tracked files: 218 (down from 249)
+
+### Tracked File Types (Final)
+- **72 Markdown** - `*_printables-description.md` spec tables  
+- **91 3D Models** - `.stl` source files
+- **21 Cura Projects** - `.3mf` files with settings
+- **8 G-Code** - Start/end code templates
+- **3 Cura Profiles** - `.curaprofile` configurations
+
+### Example Output
+```
+## Print Specifications
+
+| Specification | Value |
+|---|---|
+| Nozzle Temperature | 195°C |
+| Bed Temperature | 65°C |
+| Layer Height | 0.20 mm |
+| Filament Weight | 3.9 g |
+| Filament Length | 3.09 m |
+| Estimated Print Time | 1h 33m 54s |
+```
+
+### Documentation
+- Complete workflow guide in `DOCUMENTATION/WORKFLOW.md`
+- Updated README with quick commands
+- Security best practices documented
+- Troubleshooting guide included
+
+---
 
 ## [1.0.1] - 2025-11-10
 
