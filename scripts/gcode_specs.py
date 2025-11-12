@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Extract basic specifications from a G-code file.
-Usage: python3 gcode_specs.py <gcode_file>
+Extract basic specifications from G-code files.
+Usage: python3 gcode_specs.py [<gcode_file_or_directory>]
+
+If a directory is provided, recursively processes all .gcode files.
+If a file is provided, processes that single file.
+If no argument provided, processes current directory.
 """
 
 import re
@@ -16,10 +20,11 @@ def parse_gcode(filepath):
             content = f.read()
     except FileNotFoundError:
         print(f"Error: File '{filepath}' not found.")
-        sys.exit(1)
+        return None
 
     specs = {
         'filename': Path(filepath).name,
+        'filepath': str(filepath),
         'nozzle_temp': None,
         'bed_temp': None,
         'layer_height': None,
@@ -71,7 +76,7 @@ def parse_gcode(filepath):
     return specs
 
 
-def print_specs(specs):
+def format_specs(specs):
     """Format extracted specs as a string."""
     output = f"\n=== G-Code Specs: {specs['filename']} ===\n\n"
 
@@ -126,22 +131,15 @@ def generate_printables_description(specs):
     return desc
 
 
-def main():
-    """Main entry point."""
-    if len(sys.argv) < 2:
-        print("Usage: python3 gcode_specs.py <gcode_file>")
-        print("\nExample:")
-        print("  python3 gcode_specs.py print.gcode")
-        print("  → Output: print.txt (specs)")
-        print("  → Output: print_printables.txt (shareable description)")
-        sys.exit(1)
-
-    filepath = sys.argv[1]
+def process_file(filepath):
+    """Process a single G-code file and generate outputs."""
     specs = parse_gcode(filepath)
-    output = print_specs(specs)
+    if specs is None:
+        return False
+    
+    output = format_specs(specs)
     printables_desc = generate_printables_description(specs)
     
-    # Write to .txt file with same name as gcode file
     gcode_path = Path(filepath)
     specs_path = gcode_path.with_suffix('.txt')
     printables_path = gcode_path.with_stem(gcode_path.stem + '_printables').with_suffix('.txt')
@@ -149,19 +147,56 @@ def main():
     try:
         with open(specs_path, 'w', encoding='utf-8') as f:
             f.write(output)
-        print(f"✓ Specs saved to: {specs_path}")
-        
         with open(printables_path, 'w', encoding='utf-8') as f:
             f.write(printables_desc)
-        print(f"✓ Printables description saved to: {printables_path}")
-        
-        print(output)
-        print("\n" + "="*60)
-        print("PRINTABLES-READY DESCRIPTION:\n")
-        print(printables_desc)
+        return True
     except IOError as e:
-        print(f"Error writing files: {e}")
+        print(f"Error writing files for '{filepath}': {e}")
+        return False
+
+
+def main():
+    """Main entry point."""
+    # Determine target: file, directory, or current directory
+    if len(sys.argv) < 2:
+        target = Path.cwd()
+        print(f"No argument provided; scanning current directory: {target}\n")
+    else:
+        target = Path(sys.argv[1])
+    
+    if not target.exists():
+        print(f"Error: Path '{target}' does not exist.")
         sys.exit(1)
+    
+    gcode_files = []
+    
+    if target.is_file():
+        # Single file
+        if target.suffix.lower() == '.gcode':
+            gcode_files = [target]
+        else:
+            print(f"Error: '{target}' is not a .gcode file.")
+            sys.exit(1)
+    elif target.is_dir():
+        # Directory: recursively find all .gcode files
+        gcode_files = sorted(target.rglob('*.gcode'))
+        if not gcode_files:
+            print(f"No .gcode files found in '{target}' or subdirectories.")
+            sys.exit(0)
+    
+    print(f"Processing {len(gcode_files)} G-code file(s)...\n")
+    
+    success_count = 0
+    for gcode_file in gcode_files:
+        print(f"→ {gcode_file.relative_to(target.parent if target.is_file() else target.parent)}")
+        if process_file(gcode_file):
+            success_count += 1
+            specs = parse_gcode(gcode_file)
+            print(format_specs(specs))
+        else:
+            print(f"  ✗ Failed to process\n")
+    
+    print(f"\n✓ Successfully processed {success_count}/{len(gcode_files)} files")
 
 
 if __name__ == '__main__':

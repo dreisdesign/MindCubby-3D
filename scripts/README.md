@@ -4,30 +4,46 @@ Quick utility scripts for working with G-code files.
 
 ## `gcode_specs.py`
 
-Extract basic specifications from a G-code file.
+Extract specifications from G-code files recursively across directories or process individual files.
 
 **Usage:**
 ```bash
+# Process a single file
 python3 gcode_specs.py <gcode_file>
+
+# Process all .gcode files in a directory recursively
+python3 gcode_specs.py <directory>
+
+# Process current directory (if run from within a directory with .gcode files)
+python3 gcode_specs.py
 ```
 
-**Example:**
+**Examples:**
 ```bash
+# Single file
 python3 gcode_specs.py MODELS/01.Chip-Clip/CE3E3V2_01-chip_clip--print_in_place.gcode
+
+# Entire PRINTABLES folder (47 files)
+python3 gcode_specs.py PRINTABLES/
+
+# Current directory
+cd PRINTABLES && python3 ../scripts/gcode_specs.py
 ```
 
-**Output:**
+**Output Files:**
+For each `.gcode` file found, generates two output files:
+- `filename.txt` — Raw specs summary
+- `filename_printables.txt` — Formatted description for Printables
+
+**Example output (filename.txt):**
 ```
 === G-Code Specs: CE3E3V2_01-chip_clip--print_in_place.gcode ===
 
 Nozzle Temp:       218°C
 Bed Temp:          70°C
 Layer Height:      0.20 mm
-Nozzle Diameter:   0.4 mm (if available)
 Filament Length:   943 mm (0.9 m)
-Filament Weight:   2.3 g (if available)
-Est. Print Time:   1h 23m 45s (if available)
-Total G-Code Lines: 16862
+Total G-Code Lines: 16860
 ```
 
 **What it extracts:**
@@ -36,11 +52,13 @@ Total G-Code Lines: 16862
 - Nozzle diameter
 - Filament length (mm) and weight (grams)
 - Estimated print time
-- Total line count
+- Total G-code line count
 
 **Tips:**
-- Cura exports most of these as comments in the G-code, so availability depends on your slicer settings.
-- Useful for quick validation before printing or for tracking print specs in your model library.
+- Runs recursively through subdirectories, making it ideal for batch processing large print archives
+- Cura exports most specs as comments in the G-code header
+- Each G-code file gets two corresponding `.txt` files for reference and sharing
+- Useful for cataloging prints, validating specs before printing, or generating Printables descriptions
 
 ---
 
