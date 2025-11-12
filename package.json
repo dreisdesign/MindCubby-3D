@@ -1,0 +1,16 @@
+{
+  "name": "mindcubby-3d",
+  "version": "1.0.0",
+  "description": "3D printer configuration and model repository for Ender-3 V2 with BLTouch",
+  "scripts": {
+    "menu": "node scripts/menu.js",
+    "specs": "python3 scripts/gcode_specs.py",
+    "commit": "bash scripts/gcode-commit.sh"
+  },
+  "keywords": ["3d-printing", "ender3", "cura", "gcode"],
+  "author": "dreisdesign",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
