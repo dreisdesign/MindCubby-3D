@@ -16,7 +16,7 @@ __pycache__/
 # *.obj        # Keep OBJ files if used
 
 # Printables folder — track .md specs, .3mf projects, .stl models
-# Explicitly exclude .gcode files (regenerated each export)
+# Explicitly exclude .gcode files (regenerated each export) and media
 PRINTABLES/
 !PRINTABLES/
 !PRINTABLES/**/*.md
@@ -27,15 +27,29 @@ PRINTABLES/
 !PRINTABLES/**/_ARCHIVE/*.3mf
 !PRINTABLES/**/_ARCHIVE/*.stl
 PRINTABLES/**/*.gcode
+PRINTABLES/**/*.png
+PRINTABLES/**/*.jpg
+PRINTABLES/**/*.jpeg
+PRINTABLES/**/*.gif
+PRINTABLES/**/*.mov
+PRINTABLES/**/*.mp4
+PRINTABLES/**/*.pdf
 
 # CURA-SETTINGS folder — track .md specs, .3mf projects, .stl models
-# Explicitly exclude .gcode files (regenerated each export)
+# Explicitly exclude .gcode files (regenerated each export) and media
 CURA-SETTINGS/
 !CURA-SETTINGS/
 !CURA-SETTINGS/**/*.md
 !CURA-SETTINGS/**/*.3mf
 !CURA-SETTINGS/**/*.stl
 CURA-SETTINGS/**/*.gcode
+CURA-SETTINGS/**/*.png
+CURA-SETTINGS/**/*.jpg
+CURA-SETTINGS/**/*.jpeg
+CURA-SETTINGS/**/*.gif
+CURA-SETTINGS/**/*.mov
+CURA-SETTINGS/**/*.mp4
+CURA-SETTINGS/**/*.pdf
 
 # OS files
 .DS_Store
