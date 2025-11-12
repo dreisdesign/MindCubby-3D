@@ -98,30 +98,69 @@ def print_specs(specs):
     return output
 
 
+def generate_printables_description(specs):
+    """Generate a Printables-friendly description with specs."""
+    desc = "## Print Specifications\n\n"
+    
+    if specs['nozzle_temp']:
+        desc += f"- **Nozzle Temperature:** {specs['nozzle_temp']}°C\n"
+    if specs['bed_temp']:
+        desc += f"- **Bed Temperature:** {specs['bed_temp']}°C\n"
+    if specs['layer_height']:
+        desc += f"- **Layer Height:** {specs['layer_height']:.2f} mm\n"
+    if specs['filament_used_mm']:
+        desc += f"- **Filament Length:** {specs['filament_used_mm']/1000:.2f} m ({specs['filament_used_mm']:.0f} mm)\n"
+    if specs['filament_used_g']:
+        desc += f"- **Filament Weight:** {specs['filament_used_g']:.1f} g\n"
+    if specs['print_time_s']:
+        hours = specs['print_time_s'] // 3600
+        minutes = (specs['print_time_s'] % 3600) // 60
+        desc += f"- **Estimated Print Time:** {hours}h {minutes}m\n"
+    
+    desc += "\n## Notes\n\n"
+    desc += "- This print is optimized for the **Ender-3 V2** with **BLTouch**.\n"
+    desc += "- Uses off-print purge to prevent nozzle blobs on first layer.\n"
+    desc += "- Compatible with Cura slicer.\n"
+    desc += "- Test on a small print first before large jobs.\n"
+    
+    return desc
+
+
 def main():
     """Main entry point."""
     if len(sys.argv) < 2:
         print("Usage: python3 gcode_specs.py <gcode_file>")
         print("\nExample:")
         print("  python3 gcode_specs.py print.gcode")
-        print("  → Output: print.txt")
+        print("  → Output: print.txt (specs)")
+        print("  → Output: print_printables.txt (shareable description)")
         sys.exit(1)
 
     filepath = sys.argv[1]
     specs = parse_gcode(filepath)
     output = print_specs(specs)
+    printables_desc = generate_printables_description(specs)
     
     # Write to .txt file with same name as gcode file
     gcode_path = Path(filepath)
-    output_path = gcode_path.with_suffix('.txt')
+    specs_path = gcode_path.with_suffix('.txt')
+    printables_path = gcode_path.with_stem(gcode_path.stem + '_printables').with_suffix('.txt')
     
     try:
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(specs_path, 'w', encoding='utf-8') as f:
             f.write(output)
-        print(f"✓ Specs saved to: {output_path}")
+        print(f"✓ Specs saved to: {specs_path}")
+        
+        with open(printables_path, 'w', encoding='utf-8') as f:
+            f.write(printables_desc)
+        print(f"✓ Printables description saved to: {printables_path}")
+        
         print(output)
+        print("\n" + "="*60)
+        print("PRINTABLES-READY DESCRIPTION:\n")
+        print(printables_desc)
     except IOError as e:
-        print(f"Error writing to '{output_path}': {e}")
+        print(f"Error writing files: {e}")
         sys.exit(1)
 
 
