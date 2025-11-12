@@ -1,16 +1,8 @@
 # 3D Printing Repo .gitignore
 
-# Archive folders
+# Archive folders (but not archive markdown specs)
 _archive/
-_archive
-_ARCHIVE/
-_ARCHIVE
-
-# Media folders
 _media/
-_media
-_MEDIA/
-_MEDIA
 
 # Cura backups and cache
 *.curaprofile.bak
@@ -19,14 +11,31 @@ __pycache__/
 *.py[cod]
 
 # Large binary files
-*.gcode        ; Exclude all exported G-code files (regenerated from Cura each print)
-# *.stl        ; Keep STL source files for sharing
-# *.obj        ; Keep OBJ files if used
+*.gcode        # Exclude all exported G-code files (regenerated from Cura each print)
+# *.stl        # Keep STL source files for sharing
+# *.obj        # Keep OBJ files if used
 
-# Printables folder — keep .gcode locally, track .md specs
+# Printables folder — track .md specs, .3mf projects, .stl models
+# Explicitly exclude .gcode files (regenerated each export)
 PRINTABLES/
 !PRINTABLES/
-!PRINTABLES/**/*_printables-description.md
+!PRINTABLES/**/*.md
+!PRINTABLES/**/*.3mf
+!PRINTABLES/**/*.stl
+!PRINTABLES/**/_ARCHIVE/
+!PRINTABLES/**/_ARCHIVE/*.md
+!PRINTABLES/**/_ARCHIVE/*.3mf
+!PRINTABLES/**/_ARCHIVE/*.stl
+PRINTABLES/**/*.gcode
+
+# CURA-SETTINGS folder — track .md specs, .3mf projects, .stl models
+# Explicitly exclude .gcode files (regenerated each export)
+CURA-SETTINGS/
+!CURA-SETTINGS/
+!CURA-SETTINGS/**/*.md
+!CURA-SETTINGS/**/*.3mf
+!CURA-SETTINGS/**/*.stl
+CURA-SETTINGS/**/*.gcode
 
 # OS files
 .DS_Store
