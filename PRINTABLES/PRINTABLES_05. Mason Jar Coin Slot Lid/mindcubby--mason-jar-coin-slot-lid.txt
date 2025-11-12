@@ -1,0 +1,8 @@
+
+=== G-Code Specs: mindcubby--mason-jar-coin-slot-lid.gcode ===
+
+Nozzle Temp:       195°C
+Bed Temp:          65°C
+Layer Height:      0.20 mm
+Filament Length:   6165 mm (6.2 m)
+Total G-Code Lines: 80618

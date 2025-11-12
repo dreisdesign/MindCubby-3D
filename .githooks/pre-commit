@@ -1,0 +1,48 @@
+#!/bin/bash
+# Pre-commit hook: auto-generate .txt specs for any modified .gcode files
+# Runs before commit and stages the generated .txt files
+
+set -e
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+SCRIPTS_DIR="$REPO_ROOT/scripts"
+
+# Find all .gcode files in the working directory (even if ignored)
+# Exclude git and archive directories
+GCODE_FILES=$(find "$REPO_ROOT" -name "*.gcode" -type f 2>/dev/null | grep -v "\.git/" | grep -v "_ARCHIVE" | grep -v "_archive" || true)
+
+if [ -z "$GCODE_FILES" ]; then
+    exit 0
+fi
+
+echo "🔍 Generating specs for .gcode files..."
+
+# Process each .gcode file
+SPECS_GENERATED=0
+while IFS= read -r gcode_file; do
+    if [ -f "$gcode_file" ]; then
+        echo "  → $gcode_file"
+        
+        # Run the script silently, capturing exit code
+        if python3 "$SCRIPTS_DIR/gcode_specs.py" "$gcode_file" > /dev/null 2>&1; then
+            SPECS_GENERATED=$((SPECS_GENERATED + 1))
+            
+            # Auto-stage the generated .txt files
+            specs_txt="${gcode_file%.gcode}.txt"
+            specs_printables="${gcode_file%.gcode}_printables.txt"
+            
+            if [ -f "$specs_txt" ]; then
+                git add "$specs_txt"
+            fi
+            if [ -f "$specs_printables" ]; then
+                git add "$specs_printables"
+            fi
+        fi
+    fi
+done <<< "$GCODE_FILES"
+
+if [ $SPECS_GENERATED -gt 0 ]; then
+    echo "✓ Generated and staged specs for $SPECS_GENERATED .gcode file(s)"
+fi
+
+exit 0

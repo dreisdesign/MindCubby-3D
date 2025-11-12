@@ -1,0 +1,8 @@
+
+=== G-Code Specs: all-pieces-one-build-plate.gcode ===
+
+Nozzle Temp:       225°C
+Bed Temp:          70°C
+Layer Height:      0.12 mm
+Filament Length:   1156 mm (1.2 m)
+Total G-Code Lines: 65903

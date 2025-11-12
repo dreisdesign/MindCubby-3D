@@ -1,0 +1,5 @@
+
+=== G-Code Specs: Optimized_StartGCode_v4.gcode ===
+
+Nozzle Temp:       200°C
+Total G-Code Lines: 20

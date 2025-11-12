@@ -1,0 +1,4 @@
+
+=== G-Code Specs: Optimized_StartGCode_v6.gcode ===
+
+Total G-Code Lines: 31

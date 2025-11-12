@@ -1,0 +1,4 @@
+
+=== G-Code Specs: Ender3V2_Baseline_StartGCode.gcode ===
+
+Total G-Code Lines: 15

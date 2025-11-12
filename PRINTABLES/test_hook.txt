@@ -1,0 +1,6 @@
+
+=== G-Code Specs: test_hook.gcode ===
+
+Nozzle Temp:       220°C
+Bed Temp:          70°C
+Total G-Code Lines: 10
