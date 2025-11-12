@@ -23,11 +23,10 @@ __pycache__/
 # *.stl        ; Keep STL source files for sharing
 # *.obj        ; Keep OBJ files if used
 
-# Printables folder — keep .gcode locally, track .txt specs
+# Printables folder — keep .gcode locally, track .md specs
 PRINTABLES/
 !PRINTABLES/
-!PRINTABLES/**/*.txt
-!PRINTABLES/**/*_printables.txt
+!PRINTABLES/**/*_printables-description.md
 
 # OS files
 .DS_Store
