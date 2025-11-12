@@ -4,7 +4,8 @@
   "description": "3D printer configuration and model repository for Ender-3 V2 with BLTouch",
   "scripts": {
     "menu": "node scripts/menu.js",
-    "specs": "python3 scripts/gcode_specs.py",
+    "specs": "python3 scripts/gcode_specs.py PRINTABLES",
+    "p": "python3 scripts/gcode_specs.py PRINTABLES",
     "commit": "bash scripts/gcode-commit.sh"
   },
   "keywords": ["3d-printing", "ender3", "cura", "gcode"],
