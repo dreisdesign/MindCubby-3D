@@ -72,28 +72,30 @@ def parse_gcode(filepath):
 
 
 def print_specs(specs):
-    """Pretty-print extracted specs."""
-    print(f"\n=== G-Code Specs: {specs['filename']} ===\n")
+    """Format extracted specs as a string."""
+    output = f"\n=== G-Code Specs: {specs['filename']} ===\n\n"
 
     if specs['nozzle_temp']:
-        print(f"Nozzle Temp:       {specs['nozzle_temp']}°C")
+        output += f"Nozzle Temp:       {specs['nozzle_temp']}°C\n"
     if specs['bed_temp']:
-        print(f"Bed Temp:          {specs['bed_temp']}°C")
+        output += f"Bed Temp:          {specs['bed_temp']}°C\n"
     if specs['layer_height']:
-        print(f"Layer Height:      {specs['layer_height']:.2f} mm")
+        output += f"Layer Height:      {specs['layer_height']:.2f} mm\n"
     if specs['nozzle_diameter']:
-        print(f"Nozzle Diameter:   {specs['nozzle_diameter']:.1f} mm")
+        output += f"Nozzle Diameter:   {specs['nozzle_diameter']:.1f} mm\n"
     if specs['filament_used_mm']:
-        print(f"Filament Length:   {specs['filament_used_mm']:.0f} mm ({specs['filament_used_mm']/1000:.1f} m)")
+        output += f"Filament Length:   {specs['filament_used_mm']:.0f} mm ({specs['filament_used_mm']/1000:.1f} m)\n"
     if specs['filament_used_g']:
-        print(f"Filament Weight:   {specs['filament_used_g']:.1f} g")
+        output += f"Filament Weight:   {specs['filament_used_g']:.1f} g\n"
     if specs['print_time_s']:
         hours = specs['print_time_s'] // 3600
         minutes = (specs['print_time_s'] % 3600) // 60
         seconds = specs['print_time_s'] % 60
-        print(f"Est. Print Time:   {hours}h {minutes}m {seconds}s")
+        output += f"Est. Print Time:   {hours}h {minutes}m {seconds}s\n"
 
-    print(f"Total G-Code Lines: {specs['total_lines']}\n")
+    output += f"Total G-Code Lines: {specs['total_lines']}\n"
+    
+    return output
 
 
 def main():
@@ -102,11 +104,25 @@ def main():
         print("Usage: python3 gcode_specs.py <gcode_file>")
         print("\nExample:")
         print("  python3 gcode_specs.py print.gcode")
+        print("  → Output: print.txt")
         sys.exit(1)
 
     filepath = sys.argv[1]
     specs = parse_gcode(filepath)
-    print_specs(specs)
+    output = print_specs(specs)
+    
+    # Write to .txt file with same name as gcode file
+    gcode_path = Path(filepath)
+    output_path = gcode_path.with_suffix('.txt')
+    
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(output)
+        print(f"✓ Specs saved to: {output_path}")
+        print(output)
+    except IOError as e:
+        print(f"Error writing to '{output_path}': {e}")
+        sys.exit(1)
 
 
 if __name__ == '__main__':
