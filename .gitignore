@@ -19,9 +19,12 @@ __pycache__/
 *.py[cod]
 
 # Large binary files
-*.gcode        ; Exclude exported G-code files (regenerated from Cura each print)
+*.gcode        ; Exclude all exported G-code files (regenerated from Cura each print)
 # *.stl        ; Keep STL source files for sharing
 # *.obj        ; Keep OBJ files if used
+
+# Printables folder — keep locally but don't track (personal reference)
+PRINTABLES/
 
 # OS files
 .DS_Store
