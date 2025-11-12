@@ -1,8 +1,0 @@
-
-=== G-Code Specs: CE3E3V2_01-chip_clip--print_in_place.gcode ===
-
-Nozzle Temp:       218°C
-Bed Temp:          70°C
-Layer Height:      0.20 mm
-Filament Length:   943 mm (0.9 m)
-Total G-Code Lines: 16860

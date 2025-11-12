@@ -1,8 +1,0 @@
-
-=== G-Code Specs: mindcubby--mini-click_clicker.gcode ===
-
-Nozzle Temp:       225°C
-Bed Temp:          70°C
-Layer Height:      0.12 mm
-Filament Length:   227 mm (0.2 m)
-Total G-Code Lines: 7930

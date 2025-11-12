@@ -1,4 +1,0 @@
-
-=== G-Code Specs: Original_StartGCode_Archive.gcode ===
-
-Total G-Code Lines: 16

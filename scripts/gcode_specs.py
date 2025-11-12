@@ -1,36 +1,83 @@
 #!/usr/bin/env python3
 """
-Extract basic specifications from G-code files.
+Extract basic specifications from G-code files and .3mf files.
 Usage: python3 gcode_specs.py [<gcode_file_or_directory>]
 
 If a directory is provided, recursively processes all .gcode files.
 If a file is provided, processes that single file.
 If no argument provided, processes current directory.
 
-Smart mode: Only processes files newer than their corresponding .txt file (if it exists).
+Smart mode: Only processes files newer than their corresponding .md file (if it exists).
 """
 
 import re
 import sys
 import os
+import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
 def needs_update(gcode_file):
-    """Check if .gcode file is newer than its .txt spec file."""
+    """Check if .gcode file is newer than its _printables-description.md file."""
     gcode_path = Path(gcode_file)
-    txt_path = gcode_path.with_suffix('.txt')
+    printables_path = gcode_path.with_stem(gcode_path.stem + '_printables-description').with_suffix('.md')
     
-    # If no .txt file exists, file needs processing
-    if not txt_path.exists():
+    # If no _printables-description.md file exists, file needs processing
+    if not printables_path.exists():
         return True
     
     # Compare modification times
     gcode_mtime = os.path.getmtime(gcode_path)
-    txt_mtime = os.path.getmtime(txt_path)
+    printables_mtime = os.path.getmtime(printables_path)
     
-    # If .gcode is newer than .txt, it needs processing
-    return gcode_mtime > txt_mtime
+    # If .gcode is newer than _printables-description.md, it needs processing
+    return gcode_mtime > printables_mtime
+
+
+def extract_3mf_metadata(gcode_filepath):
+    """Extract weight and time from corresponding .3mf file if it exists."""
+    gcode_path = Path(gcode_filepath)
+    threemf_path = gcode_path.with_suffix('.3mf')
+    
+    metadata = {'weight_g': None, 'time_s': None}
+    
+    if not threemf_path.exists():
+        return metadata
+    
+    try:
+        with zipfile.ZipFile(threemf_path, 'r') as zf:
+            # Read the Cura-specific metadata file
+            try:
+                cura_xml = zf.read('Cura/metadata.xml').decode('utf-8')
+                root = ET.fromstring(cura_xml)
+                
+                # Extract weight and time from Cura metadata
+                for child in root:
+                    if child.tag.endswith('setting') or 'weight' in child.tag.lower():
+                        text = child.text or ''
+                        # Look for weight value
+                        if 'weight' in child.tag.lower() and text:
+                            try:
+                                metadata['weight_g'] = float(text)
+                            except ValueError:
+                                pass
+                    # Look for time in any element
+                    if 'time' in child.tag.lower() and text:
+                        try:
+                            # Parse time if it's in seconds
+                            metadata['time_s'] = float(text)
+                        except ValueError:
+                            pass
+                            
+            except KeyError:
+                # Try alternative metadata locations
+                pass
+                
+    except Exception as e:
+        pass  # Silently fail if .3mf can't be read
+    
+    return metadata
 
 
 def parse_gcode(filepath):
@@ -74,24 +121,30 @@ def parse_gcode(filepath):
     if nozzle_match:
         specs['nozzle_diameter'] = float(nozzle_match.group(1))
 
-    # Extract filament used (in mm or mm^3, often in comment)
-    filament_mm_match = re.search(r';Filament used: ([\d.]+)\s*m', content)
-    if filament_mm_match:
-        specs['filament_used_mm'] = float(filament_mm_match.group(1)) * 1000  # Convert m to mm
+    # Extract print time (in seconds from ;TIME: comment)
+    time_match = re.search(r';TIME:(\d+)', content)
+    if time_match:
+        specs['print_time_s'] = int(time_match.group(1))
 
-    filament_g_match = re.search(r';Filament used: [\d.]+\s*m\s.*?(\d+(?:\.\d+)?)\s*g', content)
+    # Extract filament used (in meters from ;Filament used:)
+    filament_mm_match = re.search(r';Filament used: ([\d.]+)\s*m(?!\w)', content)
+    if filament_mm_match:
+        filament_m = float(filament_mm_match.group(1))
+        specs['filament_used_mm'] = filament_m * 1000  # Convert m to mm
+        # Calculate weight: standard 1.75mm PLA/PETG is ~1.25g per meter
+        specs['filament_used_g'] = filament_m * 1.25
+    
+    # Try to find explicit weight if provided
+    filament_g_match = re.search(r';Filament used:.*?(\d+(?:\.\d+)?)\s*g', content)
     if filament_g_match:
         specs['filament_used_g'] = float(filament_g_match.group(1))
 
-    # Extract print time (often in comment as estimated time)
-    time_match = re.search(r';Print time: ([\d:]+)', content)
-    if time_match:
-        time_str = time_match.group(1)
-        parts = time_str.split(':')
-        if len(parts) == 3:  # HH:MM:SS
-            specs['print_time_s'] = int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
-        elif len(parts) == 2:  # MM:SS
-            specs['print_time_s'] = int(parts[0]) * 60 + int(parts[1])
+    # Try to extract weight and time from .3mf if not found in G-code
+    threemf_metadata = extract_3mf_metadata(filepath)
+    if threemf_metadata['weight_g'] and not specs['filament_used_g']:
+        specs['filament_used_g'] = threemf_metadata['weight_g']
+    if threemf_metadata['time_s'] and not specs['print_time_s']:
+        specs['print_time_s'] = threemf_metadata['time_s']
 
     return specs
 
@@ -124,54 +177,62 @@ def format_specs(specs):
 
 
 def generate_printables_description(specs):
-    """Generate a Printables-friendly description with specs."""
+    """Generate a Printables-friendly markdown description with table format."""
     desc = "## Print Specifications\n\n"
+    desc += "| Specification | Value |\n"
+    desc += "|---|---|\n"
     
     if specs['nozzle_temp']:
-        desc += f"- **Nozzle Temperature:** {specs['nozzle_temp']}°C\n"
+        desc += f"| Nozzle Temperature | {specs['nozzle_temp']}°C |\n"
     if specs['bed_temp']:
-        desc += f"- **Bed Temperature:** {specs['bed_temp']}°C\n"
+        desc += f"| Bed Temperature | {specs['bed_temp']}°C |\n"
     if specs['layer_height']:
-        desc += f"- **Layer Height:** {specs['layer_height']:.2f} mm\n"
-    if specs['filament_used_mm']:
-        desc += f"- **Filament Length:** {specs['filament_used_mm']/1000:.2f} m ({specs['filament_used_mm']:.0f} mm)\n"
+        desc += f"| Layer Height | {specs['layer_height']:.2f} mm |\n"
+    if specs['nozzle_diameter']:
+        desc += f"| Nozzle Diameter | {specs['nozzle_diameter']} mm |\n"
+    
+    # Filament info
     if specs['filament_used_g']:
-        desc += f"- **Filament Weight:** {specs['filament_used_g']:.1f} g\n"
+        desc += f"| Filament Weight | {specs['filament_used_g']:.1f} g |\n"
+    if specs['filament_used_mm']:
+        desc += f"| Filament Length | {specs['filament_used_mm']/1000:.2f} m |\n"
+    
+    # Print time
     if specs['print_time_s']:
         hours = specs['print_time_s'] // 3600
         minutes = (specs['print_time_s'] % 3600) // 60
-        desc += f"- **Estimated Print Time:** {hours}h {minutes}m\n"
+        seconds = specs['print_time_s'] % 60
+        if hours > 0:
+            desc += f"| Estimated Print Time | {hours}h {minutes}m {seconds}s |\n"
+        else:
+            desc += f"| Estimated Print Time | {minutes}m {seconds}s |\n"
     
     desc += "\n## Notes\n\n"
-    desc += "- This print is optimized for the **Ender-3 V2** with **BLTouch**.\n"
-    desc += "- Uses off-print purge to prevent nozzle blobs on first layer.\n"
-    desc += "- Compatible with Cura slicer.\n"
-    desc += "- Test on a small print first before large jobs.\n"
+    desc += "- Optimized for **Ender-3 V2** with **BLTouch** bed leveling\n"
+    desc += "- Uses off-print purge line to prevent nozzle blobs\n"
+    desc += "- Exported from **Cura** with custom profile\n"
+    desc += "- Recommended: Test on a small print first before large jobs\n"
     
     return desc
 
 
 def process_file(filepath):
-    """Process a single G-code file and generate outputs."""
+    """Process a single G-code file and generate Printables markdown output."""
     specs = parse_gcode(filepath)
     if specs is None:
         return False
     
-    output = format_specs(specs)
     printables_desc = generate_printables_description(specs)
     
     gcode_path = Path(filepath)
-    specs_path = gcode_path.with_suffix('.txt')
-    printables_path = gcode_path.with_stem(gcode_path.stem + '_printables').with_suffix('.txt')
+    printables_path = gcode_path.with_stem(gcode_path.stem + '_printables-description').with_suffix('.md')
     
     try:
-        with open(specs_path, 'w', encoding='utf-8') as f:
-            f.write(output)
         with open(printables_path, 'w', encoding='utf-8') as f:
             f.write(printables_desc)
         return True
     except IOError as e:
-        print(f"Error writing files for '{filepath}': {e}")
+        print(f"Error writing file for '{filepath}': {e}")
         return False
 
 
