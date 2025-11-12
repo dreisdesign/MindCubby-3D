@@ -6,11 +6,31 @@ Usage: python3 gcode_specs.py [<gcode_file_or_directory>]
 If a directory is provided, recursively processes all .gcode files.
 If a file is provided, processes that single file.
 If no argument provided, processes current directory.
+
+Smart mode: Only processes files newer than their corresponding .txt file (if it exists).
 """
 
 import re
 import sys
+import os
 from pathlib import Path
+
+
+def needs_update(gcode_file):
+    """Check if .gcode file is newer than its .txt spec file."""
+    gcode_path = Path(gcode_file)
+    txt_path = gcode_path.with_suffix('.txt')
+    
+    # If no .txt file exists, file needs processing
+    if not txt_path.exists():
+        return True
+    
+    # Compare modification times
+    gcode_mtime = os.path.getmtime(gcode_path)
+    txt_mtime = os.path.getmtime(txt_path)
+    
+    # If .gcode is newer than .txt, it needs processing
+    return gcode_mtime > txt_mtime
 
 
 def parse_gcode(filepath):
@@ -188,6 +208,10 @@ def main():
     
     success_count = 0
     for gcode_file in gcode_files:
+        # Skip if file hasn't changed
+        if not needs_update(gcode_file):
+            continue
+        
         print(f"→ {gcode_file.relative_to(target.parent if target.is_file() else target.parent)}")
         if process_file(gcode_file):
             success_count += 1
@@ -196,7 +220,10 @@ def main():
         else:
             print(f"  ✗ Failed to process\n")
     
-    print(f"\n✓ Successfully processed {success_count}/{len(gcode_files)} files")
+    if success_count == 0:
+        print("✓ All files up to date, nothing to process")
+    else:
+        print(f"\n✓ Successfully processed {success_count}/{len(gcode_files)} files")
 
 
 if __name__ == '__main__':
