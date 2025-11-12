@@ -1,0 +1,13 @@
+| Setting | Value |
+| :---- | :---- |
+| **Print Time** | ~1.18 hours |
+| **Filament Used** | 1.72 m (~4.1 g) |
+| **Layer Height** | 0.16 mm |
+| **Nozzle Temp** | 240 °C |
+| **Bed Temp** | 70 °C |
+| **Printer** | Creality Ender-3 |
+| **Slicer** | Cura_SteamEngine 5.11.0 |
+| **Model Dimensions** | ~77.8 × 76.1 × 78.6 mm |
+| **Layer Count** | 409 |
+| **Supports** | Not required |
+

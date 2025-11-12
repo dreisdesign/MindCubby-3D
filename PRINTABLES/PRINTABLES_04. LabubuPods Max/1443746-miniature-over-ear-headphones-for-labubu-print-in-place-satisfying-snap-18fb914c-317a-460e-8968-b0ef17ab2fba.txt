@@ -1,0 +1,93 @@
+Miniature Over-Ear
+Headphones for
+Labubu - Print-in-
+Place & Satisfying
+Snap
+MindCubby
+VIEW IN BROWSER
+updated 13. 10. 2025 | published 13. 10. 2025
+Summary
+Miniature, print-in-place headphones with a snap-fit hinge for full rotation.
+Perfect accessory for Labubu's.
+
+1.50 hrs
+
+1 pcs
+f
+0.20 mm
+k
+0.40 mm
+h
+PLA
+
+9 g
+d
+Creality
+Ender 3 V2
+Toys & Games > Other Toys & Games
+Tags: figurine miniature articulated printinplace gadget
+quickprint headphones snapfit desktoy dollaccessories
+originaldesign asmr popmart labubu
+This is my original design for Miniature Over-Ear Headphones,
+specifically scaled to be the perfect accessory for collectible figures like
+Labubu, Pop Mart, and other 1/12-scale art toys. The unique print-
+in-place construction means no assembly is required—just pop them off
+the plate, and they're ready to wear. The design features a hidden snap-
+fit pivot that creates a highly satisfying click/snap rotation in the
+earcups, making them fun to fidget with and pose.
+Print Tips for the Perfect Snap
+•
+•
+•
+To ensure the print-in-place mechanism works smoothly and you get
+the satisfying "snap," do not use supports and ensure your
+printer's first layer adhesion is dialed in.
+Tolerance: The hinge mechanism uses an engineered tolerance, so
+a well-calibrated printer is essential.
+Layer Separation: Gently rotate the hinges after the print is
+complete to break the thin layer of adhesion. You will hear the
+satisfying snap when the hinge is released!
+⚙ Extracted Print Settings
+These settings were used to successfully print the design on a Creality
+Ender-3 V2 with a 0.4 mm nozzle.
+Setting Value Extracted
+from G-code Notes
+Print Time
+1 hr 25 min 36
+sec (5136
+seconds)
+Very quick print, ideal for
+batch printing accessories.
+Layer Height 0.2 mm
+Standard quality is fine, or
+try 0.16 mm for cleaner
+details.
+Supports None Designed for zero
+supports.
+Filament Used 2.87 meters Minimal material cost.
+Max
+Dimensions
+(XYZ)
+104.2 x 74.1 x 8.8
+mm
+Very low height (8.8 mm)
+allows for fast printing.
+Target
+Machine Creality Ender-3 Sliced in Cura 5.10.1.
+Nozzle Temp 195∘C Standard PLA setting.
+Bed Temp 60∘C (Initial: 65∘C)
+Model files
+mindcubby-miniature-headphones.stl
+mindcubby-miniature-headphones.3mf
+Print files
+mindcubby-miniature-headphones.gcode
+h PLA k 0.40 mm f 0.20 mm  1.50 hrs  9 g
+License 
+This work is licensed under a
+Creative Commons (4.0 International License)
+Attribution—Noncommercial—Share Alike
+✖ | Sharing without ATTRIBUTION
+✔ | Remix Culture allowed
+✖ | Commercial Use
+✖ | Free Cultural Works
+✖ | Meets Open Definition
