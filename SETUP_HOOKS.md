@@ -4,7 +4,34 @@
 
 This repository uses git hooks to automate G-code spec extraction. The pre-commit hook automatically generates `.txt` and `_printables.txt` files whenever `.gcode` files are modified.
 
-## Initial Setup
+## Quick Commit Command
+
+For even faster workflow, use the **`gcode-commit`** command:
+
+```bash
+gcode-commit "your commit message"
+```
+
+This single command:
+1. Stages all changes (`git add .`)
+2. Generates specs for all `.gcode` files
+3. Commits with your message
+4. Pushes to remote
+
+**Example:**
+```bash
+gcode-commit "add: new model"
+# Output:
+# 📦 Staging changes...
+# 🔍 Running spec generation...
+#   → model.gcode
+# ✓ Generated and staged specs for 1 .gcode file(s)
+# 💾 Committing: add: new model
+# 🚀 Pushing to remote...
+# ✅ Done!
+```
+
+## Manual Setup (if needed)
 
 After cloning the repository, enable the hooks with:
 
@@ -12,7 +39,16 @@ After cloning the repository, enable the hooks with:
 git config core.hooksPath .githooks
 ```
 
-This tells git to use the hooks in the `.githooks/` directory instead of the default `.git/hooks/`.
+The `gcode-commit` alias should be automatically added to your `~/.zshrc` during initial setup. If not, manually add:
+
+```bash
+alias gcode-commit="/path/to/repo/scripts/gcode-commit.sh"
+```
+
+Then reload your shell:
+```bash
+source ~/.zshrc
+```
 
 ## What the Hook Does
 
@@ -27,23 +63,19 @@ When you commit (after adding `.gcode` files):
 
 ## Example Workflow
 
+**Traditional git:**
 ```bash
-# Export new G-code from Cura
 cp ~/Downloads/model.gcode PRINTABLES/PROJECT/
-
-# Stage and commit
 git add .
-git commit -m "add: new model"
+git commit -m "add: model"
+git push
+```
 
-# Output:
-# 🔍 Generating specs for .gcode files...
-#   → /path/to/model.gcode
-# ✓ Generated and staged specs for 1 .gcode file(s)
-
-# Commit includes:
-# - model.gcode (ignored by git, not in repo)
-# - model.txt (specs, tracked)
-# - model_printables.txt (shareable description, tracked)
+**With gcode-commit (faster!):**
+```bash
+cp ~/Downloads/model.gcode PRINTABLES/PROJECT/
+gcode-commit "add: model"
+# → Stages, generates specs, commits, and pushes in one command
 ```
 
 ## Notes
