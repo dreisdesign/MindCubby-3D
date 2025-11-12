@@ -3,6 +3,14 @@
 # Archive folders
 _archive/
 _archive
+_ARCHIVE/
+_ARCHIVE
+
+# Media folders
+_media/
+_media
+_MEDIA/
+_MEDIA
 
 # Cura backups and cache
 *.curaprofile.bak
@@ -10,10 +18,10 @@ _archive
 __pycache__/
 *.py[cod]
 
-# Large binary files (optional - uncomment to exclude)
-# *.gcode
-# *.stl
-# *.obj
+# Large binary files
+*.gcode        ; Exclude exported G-code files (regenerated from Cura each print)
+# *.stl        ; Keep STL source files for sharing
+# *.obj        ; Keep OBJ files if used
 
 # OS files
 .DS_Store
