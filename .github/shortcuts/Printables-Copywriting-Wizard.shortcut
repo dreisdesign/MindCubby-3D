@@ -1,0 +1,455 @@
+# Printables Copywriting Wizard (Apple Shortcuts)
+
+**Maintainable Apple Shortcuts workflow for generating Printables listing copy.**
+
+---
+
+## QUESTIONS TEXT BLOCK
+
+After running the shell script, set up this text block in a Shortcuts variable.
+
+```
+Model Name (e.g., "Chip Clip")
+What does it do? (e.g., "Holds chip bags closed")
+Key Features (e.g., "Print-in-Place, no assembly, no supports")
+Special Printing Notes (optional - leave blank if none)
+```
+
+## FLOW AFTER SHELL SCRIPT
+
+```
+1. Run Shell Script (gcode_specs.py)
+
+2. Set variable "questions" = Text block above
+
+3. Split Text action
+   Input: questions
+   Separator: Newlines
+   Result: questionsList
+
+4. Set variable "answers" = empty list
+
+5. Repeat with each
+   Input: questionsList
+   
+   Inside loop:
+     Ask for Text (Prompt: Repeat Item)
+     Add to list: answers (add response)
+
+6. Show Result: answers
+```
+
+---
+
+## SHORTCUT FLOW STRUCTURE
+
+### 1. Initialize
+```
+Set variable "questions" = text block above
+Set variable "answers" = empty list
+Set variable "answerIndex" = 0
+```
+
+### 2. Loop Through Questions
+```
+Repeat with each line in "questions":
+  Display "Ask for Text"
+    Prompt: [current line]
+    Default text: [blank, or populate from saved defaults]
+  Store response in "answers" list
+```
+
+### 3. Generate Output Sections
+```
+After loop completes:
+  Title = generate_title(answers[0], answers[2], answers[5])
+  Summary = generate_summary(answers[1], answers[2], answers[5])
+  Tags = generate_tags(answers[1], answers[2], answers[5])
+  Description = generate_description(answers)
+```
+
+### 4. Output & Copy
+```
+Format all 4 sections with markdown
+Copy to clipboard
+Display result
+Option: Save to file
+```
+
+---
+
+## KEY BENEFITS
+
+- **Single text block:** Easy to maintain questions in one place
+- **Multi-line support:** Answers can span multiple lines
+- **Defaults:** Populate with last used values or templates
+- **Repeat loop:** Process questions sequentially without multi-select complexity
+- **Modular:** Can add/remove questions by editing text block
+
+---
+
+## VARIABLES TO CREATE
+
+| Variable | Type | Purpose |
+|----------|------|---------|
+| `questions` | Text | Newline-delimited list of questions |
+| `answers` | List | Stores user responses in order |
+| `answerIndex` | Number | Current question index (for repeat loop) |
+| `modelName` | Text | answers[0] |
+| `primaryFunction` | Text | answers[1] |
+| `keyFeatures` | Text | answers[2] |
+| `printTime` | Text | answers[3] |
+| `filamentWeight` | Text | answers[4] |
+| `material` | Text | answers[5] |
+| `specialNotes` | Text | answers[6] |
+| `title` | Text | Generated title section |
+| `summary` | Text | Generated summary section |
+| `tags` | Text | Generated tags section |
+| `description` | Text | Generated description section |
+
+---
+
+## EXPERT SETUP GUIDE
+
+### Step 0: File Selection & Run G-code Parser
+```
+Ask for file (type: .gcode)
+Get the folder containing the gcode file
+Run Shell Script: python3 /path/to/scripts/gcode_specs.py [folder]
+(Script generates .md file in same folder)
+Read the generated .md file → store in variable `mdContent`
+```
+
+**Shortcut actions:**
+1. Add: **Ask for [File]** → set variable `selectedGcode`
+2. Add: **Get folder name** from file path → set variable `gcodeFolderPath`
+3. Add: **Run Shell Script**
+   ```
+   /usr/bin/python3 /Users/danielreis/Documents/3D_PRINTING/MINDCUBBY-3D/scripts/gcode_specs.py "$1"
+   ```
+   Pass as argument: `gcodeFolderPath`
+4. Add: **Get files from folder** → find the newly generated `*_printables-description.md`
+5. Add: **Read file** → store in variable `mdContent`
+6. Continue to Step 1 (ask simplified questions)
+
+### Step 1: Create Variables (5 total)
+```
+questions (Text) - simplified questions text block (see below)
+answers (List) - initialized as empty list
+mdContent (Text) - the generated .md file content from Step 0
+mdFilePath (Text) - path to the .md file for appending later
+```
+
+### Step 2: Simplified Questions (User Input Only)
+```
+Model Name (e.g., "Chip Clip")
+What does it do? (e.g., "Holds chip bags closed")
+Key Features (e.g., "Print-in-Place, no assembly, no supports")
+Special Printing Notes (optional - leave blank if none)
+```
+
+### Step 3: Ask Loop
+```
+Split Text questions by newlines → questionsList
+Set answers = []
+Repeat with each item in questionsList:
+  Ask for Text (prompt: Repeat Item)
+  Add result to answers
+```
+
+### Step 4: Parse Answers
+```
+Set modelName = answers[0]
+Set primaryFunction = answers[1]
+Set keyFeatures = answers[2]
+Set specialNotes = answers[3]
+```
+
+### Step 5: Generate Printables Copy Sections
+```
+Title = "[modelName] - [extract design from keyFeatures] - [extract benefit]"
+Summary = "[feature1], [feature2] design for **daily use**. [primaryFunction] in under **X minutes**."
+Tags = [split and format keyFeatures + tested + quick_print keywords]
+Description = Quick Facts + Print Settings table + Critical Notes + Community Note
+```
+
+### Step 6: Append to .md File
+```
+Build appendContent:
+  "\n\n---\n\n## PRINTABLES LISTING COPY\n\n"
+  + "## Title\n\n" + title
+  + "\n\n## Summary\n\n" + summary
+  + "\n\n## Tags\n\n" + tags
+  + "\n\n## Description\n\n" + description
+
+Combine:
+  newFileContent = mdContent + appendContent
+
+Write file:
+  mdFilePath ← newFileContent
+```
+
+**Shortcut actions:**
+1. Build all copy sections using text manipulation
+2. Combine with mdContent (from Step 0)
+3. Use **Write file** to save back to mdFilePath
+
+### Step 7: Output Result
+```
+Show the complete .md file content
+Copy to Clipboard (optional)
+Done!
+```
+
+---
+
+## SHORTCUTS-SPECIFIC TIPS
+
+- **File picker:** Use "Ask for [File]" action (filters by type)
+- **Shell script:** Use "Run Shell Script" → pass file as argument with `$1`
+- **JSON parsing:** If output is JSON, use "Get dictionary value" to extract fields
+- **Text parsing:** If output is plain text, use "Split Text" and index extraction
+- **Indexing:** Use `List[index]` syntax (0-based)
+- **Line splitting:** Use "Split Text" by newlines
+- **Repeat loop:** Use "Repeat with each" on split text
+- **Conditionals:** Use "If" for validation (e.g., Summary length check)
+- **Clipboard:** Use "Copy to Clipboard" then "Show Result"
+- **Debugging:** Add "Show Result" between steps to verify variables
+
+---
+
+## QUICK CHECKLIST
+
+- [ ] File picker working
+- [ ] Shell script returns G-code data
+- [ ] G-code values parsed and stored
+- [ ] 5 variables created
+- [ ] Ask loop functional (test with 2-3 questions)
+- [ ] Answers correctly indexed
+- [ ] Title generation logic correct
+- [ ] Summary 120-char validation working
+- [ ] Tags formatted correctly
+- [ ] Description markdown with G-code values
+- [ ] Output combines all 4 sections
+- [ ] Copy to clipboard works
+- [ ] Result displays cleanly
+
+---
+
+## SHELL SCRIPT INTEGRATION
+
+**File path in shortcut:**
+```
+/usr/bin/python3 /Users/danielreis/Documents/3D_PRINTING/MINDCUBBY-3D/scripts/gcode_specs.py "$1"
+```
+
+**Expected output:**
+- Script generates `.md` file in the same folder as the `.gcode` file
+- File format: `[gcodename]_printables-description.md`
+- Contains markdown table with Print Time, Filament, Nozzle Temp, Bed Temp, etc.
+
+**Parsing approach:**
+1. Read the generated `.md` file
+2. Use "Match Text" action with regex to extract table values
+3. Store extracted values in variables for use in copywriting generation
+
+**Regex examples:**
+```
+For value extraction from markdown table rows:
+Print Time \| (.+?)$ 
+Filament .+?\| (.+?)$
+```
+
+---
+
+## STEP 1: Ask Loop - Collect User Input
+
+After reading `mdContent`, set up the questions loop.
+
+### Set Up Questions Text Block
+
+```
+Set variable "questions" = Text:
+Model Name (e.g., "Chip Clip")
+What does it do? (e.g., "Holds chip bags closed")
+Key Features (e.g., "Print-in-Place, no assembly, no supports")
+Special Printing Notes (optional - leave blank if none)
+```
+
+### Split Questions and Ask Loop
+
+```
+1. Add "Split Text" action
+   Input: questions
+   Separator: Newlines
+   Result: questionsList
+
+2. Set variable "answers" = empty list
+
+3. Add "Repeat with each" loop
+   Input: questionsList
+   
+   Inside loop:
+   a. Add "Ask for Text"
+      Prompt: Repeat Item
+      Result: (stored automatically)
+   
+   b. Add "Add to list"
+      List: answers
+      Item: (result from Ask for Text)
+
+4. End Repeat loop
+
+Result: answers = [modelName, primaryFunction, keyFeatures, specialNotes]
+```
+
+---
+
+## STEP 2: Parse Answers
+
+```
+Set variable "modelName" = answers[1]
+Set variable "primaryFunction" = answers[2]
+Set variable "keyFeatures" = answers[3]
+Set variable "specialNotes" = answers[4]
+```
+
+---
+
+## STEP 3: Generate Copy Sections
+
+### Generate Title
+```
+Set variable "title" = Text:
+[modelName] - [extract design from keyFeatures] - [key benefit]
+
+Example logic:
+- If keyFeatures contains "Print-in-Place" → use "Print-in-Place (PIP)"
+- Extract one key benefit from keyFeatures
+- Result: "Chip Clip - Print-in-Place (PIP) - Low Poly, Strong Grip"
+```
+
+### Generate Summary (120 chars max)
+```
+Set variable "summary" = Text:
+[feature1], [feature2] design for **daily use**. [primaryFunction]. **Tested.**
+
+Validate length:
+- Count Characters of summary
+- If > 120: Show warning "Summary too long"
+```
+
+### Generate Tags
+```
+Set variable "tags" = Text:
+[split keyFeatures by comma]
+[convert to lowercase, replace spaces with underscores]
+Add: tested quick_print fast_print
+
+Example: chip_clip clip printinplace print-in-place pip tested quick_print
+```
+
+### Generate Description
+```
+Set variable "description" = Text:
+
+## Quick Facts
+
+* **Design:** [from keyFeatures]
+* **Speed:** [from mdContent - extract print time]
+* **Function:** [primaryFunction]
+* **Durability:** PETG tested
+
+## Print Settings
+
+[Copy existing table from mdContent]
+
+## Critical Printing Notes
+
+[specialNotes]
+
+## Community Note
+
+This is an open-source design intended for daily use. If you print one, please **share your make** and let me know if you have any feedback!
+```
+
+---
+
+## STEP 4: Build Copywriting Block
+
+```
+Set variable "copywritingBlock" = Text:
+
+---
+
+## PRINTABLES LISTING COPY
+
+### Title
+[title]
+
+### Summary
+[summary]
+
+### Tags
+[tags]
+
+### Description
+[description]
+```
+
+---
+
+## STEP 5: Append to .md File
+
+```
+1. Read current mdContent (already have it from Step 0)
+
+2. Combine:
+   newContent = mdContent + copywritingBlock
+
+3. Add "Write file" action
+   File: mdFilePath
+   Content: newContent
+   Overwrite: Yes
+
+4. Result: .md file now contains original specs + copywriting copy
+```
+
+---
+
+## STEP 6: Display Final Result
+
+```
+Add "Show Result" action
+Input: newContent
+
+User sees:
+- Original G-code specs table
+- New copywriting sections (Title, Summary, Tags, Description)
+- All ready to copy/paste into Printables
+```
+
+---
+
+## Variable Summary at End
+
+| Variable | Contains |
+|----------|----------|
+| `mdContent` | Original .md file (specs table) |
+| `answers` | [modelName, primaryFunction, keyFeatures, specialNotes] |
+| `title` | Generated Printables title |
+| `summary` | Generated 120-char summary |
+| `tags` | Generated space-separated tags |
+| `description` | Generated description with Quick Facts + Settings + Notes |
+| `copywritingBlock` | Full formatted copywriting section |
+| `newContent` | mdContent + copywritingBlock (ready to write) |
+
+---
+
+## Key Implementation Notes
+
+- **Text building:** Use concatenation or "Combine text" action
+- **Regex for features:** If available, use to extract key phrases
+- **Print time:** Use "Match text" on mdContent to extract from table
+- **Error handling:** Add "If error" checks after file write operation
+- **Result display:** Show in web view or text, user can copy

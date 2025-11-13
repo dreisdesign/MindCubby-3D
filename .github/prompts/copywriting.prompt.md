@@ -4,9 +4,11 @@ agent: agent
 
 # Generate Printables Listing Copy
 
-## PHASE 1: Gather Model Information
+## PHASE 1: Gather Model Information (Sequential Conversation Mode)
 
-Before generating copy, ask the user to provide:
+**IMPORTANT:** This prompt is designed for continuous conversation. Ask each question ONE AT A TIME, and the user will click "continue" after each response to proceed to the next question. Do NOT ask all questions at once.
+
+Gather the following information from the user sequentially:
 
 1. **Model Name** - What is the object/project name?
 2. **Primary Function** - What does it do? (e.g., "holds chip bags", "organizes cables")
@@ -16,20 +18,24 @@ Before generating copy, ask the user to provide:
 6. **Filament Type** - Material tested (e.g., "PETG")
 7. **Special Notes** - Any critical printing tips or assembly requirements?
 
-Example prompt to user:
-```
-📋 I'll generate Printables copy for your model. Please provide:
+**Workflow:**
+1. Ask the first question only
+2. User responds
+3. User clicks "continue"
+4. Ask the second question only
+5. Repeat until all 7 pieces of information are collected
+6. After collecting all 7 answers, proceed to PHASE 2
 
-1. **Model Name:** (e.g., "Chip Clip")
-2. **What it does:** (e.g., "Holds chip bags closed with spring-loaded mechanism")
-3. **Key Features:** (e.g., "Print-in-Place, no assembly, no supports")
-4. **Print Time:** (e.g., "19m 50s")
-5. **Filament Weight:** (e.g., "3.9g")
-6. **Material Tested:** (e.g., "PETG")
-7. **Any special notes:** (e.g., "Requires clean first layer")
-```
+**Question sequence:**
+1. "What is the **model name**? (e.g., 'Chip Clip')"
+2. "What does it do? (e.g., 'Holds chip bags closed with spring-loaded mechanism')"
+3. "What are the **key features**? (e.g., 'Print-in-Place, no assembly, no supports')"
+4. "What is the **print time**? (e.g., '19m 50s')"
+5. "What is the **filament weight**? (e.g., '3.9g')"
+6. "What **material** was tested? (e.g., 'PETG')"
+7. "Any **special printing notes**? (e.g., 'Requires clean first layer') - or type 'none' if not applicable"
 
-Once you have this info, proceed to PHASE 2.
+Once all 7 responses are collected, proceed to PHASE 2.
 
 ---
 
