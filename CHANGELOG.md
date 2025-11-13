@@ -2,6 +2,27 @@
 
 All changes to the MINDCUBBY-3D repository.
 
+## [2.0.1] - 2025-11-13
+
+### Documentation Consolidation 📚
+Streamlined documentation structure for better navigation and maintainability.
+
+#### Changes
+- **Consolidated 6 files** into 2 focused documents (759 lines removed, 36% reduction)
+  - Removed: `WORKFLOW.md`, `QUICK_REFERENCE.md`, `PRINTER_SPECS.md`, `CURA_PROFILE_MANAGEMENT.md`, `MULTI_MATERIAL_SETUP.md`, `MILESTONE_1.md`
+  - Created: `DOCUMENTATION/SETUP.md` (hardware, materials, profiles, troubleshooting)
+  - Created: `DOCUMENTATION/REFERENCE.md` (commands, workflows, tips, benchmarks, FAQ)
+  
+- **Updated Navigation** in README.md
+  - Quick Links: 3 documentation links → 2 consolidated links
+  - Directory structure: reflects new doc organization
+  
+#### Benefits
+- Easier to find information (2 focused files vs 6 overlapping files)
+- Reduced documentation maintenance burden
+- Better cross-referencing between setup and reference topics
+- Cleaner repository structure
+
 ## [2.0.0] - 2025-11-12
 
 ### Complete Automation System ⚡
