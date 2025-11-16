@@ -1,0 +1,19 @@
+; Ender 3 V2 - Production End G-Code (active)
+; Status: PRODUCTION BASELINE - WARM STANDBY (as of 2025-11-16)
+; Purpose: Final retract, park, and maintain heat for quick reprints
+
+G91 ; Relative positioning
+G1 E-2 F2700 ; Retract filament 2mm quickly
+G1 E-2 Z0.2 F2400 ; Retract another 2mm and raise Z 0.2mm
+G1 Z20 F3000 ; Raise Z axis 20mm total (clear print)
+
+G90 ; Switch back to Absolute positioning
+; Park at a safe front-left spot: move bed forward for access
+; Z has already been raised to 20mm above print so head is clear
+G1 X30 Y200 F5000 ; Park nozzle at front-left (Y200 = bed forward for access)
+M106 S0 ; Turn-off cooling fan
+
+; WARM STANDBY (ready for next print - no blocking pause)
+M104 S180 ; Nozzle to 180°C (warm standby)
+M140 S70 ; Bed to 70°C (warm standby)
+M84 ; Disable all steppers (hotend/bed stay warm)

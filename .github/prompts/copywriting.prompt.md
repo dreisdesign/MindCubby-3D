@@ -4,38 +4,33 @@ agent: agent
 
 # Generate Printables Listing Copy
 
-## PHASE 1: Gather Model Information (Sequential Conversation Mode)
+## Overview
 
-**IMPORTANT:** This prompt is designed for continuous conversation. Ask each question ONE AT A TIME, and the user will click "continue" after each response to proceed to the next question. Do NOT ask all questions at once.
+This prompt generates professional Printables listing copy from G-code specifications and user-provided copywriting details.
 
-Gather the following information from the user sequentially:
+**Two workflow modes:**
 
-1. **Model Name** - What is the object/project name?
-2. **Primary Function** - What does it do? (e.g., "holds chip bags", "organizes cables")
-3. **Key Features** - What makes it unique? (e.g., "print-in-place", "no supports needed", "low-poly design")
-4. **Print Time** - Estimated time (e.g., "19 minutes 50 seconds")
-5. **Filament Used** - Weight in grams (e.g., "3.9g")
-6. **Filament Type** - Material tested (e.g., "PETG")
-7. **Special Notes** - Any critical printing tips or assembly requirements?
+### Mode 1: Interactive Collection (via Apple Shortcuts)
+Use the **Printables-Copywriting-Wizard** Shortcut to collect copywriting info interactively, then the script appends it to generated specs.
 
-**Workflow:**
-1. Ask the first question only
-2. User responds
-3. User clicks "continue"
-4. Ask the second question only
-5. Repeat until all 7 pieces of information are collected
-6. After collecting all 7 answers, proceed to PHASE 2
+### Mode 2: Direct Generation (from existing `.md` files)
+When you already have specs in a `*_printables-description.md` file, provide the copywriting details directly and generate the full listing.
 
-**Question sequence:**
-1. "What is the **model name**? (e.g., 'Chip Clip')"
-2. "What does it do? (e.g., 'Holds chip bags closed with spring-loaded mechanism')"
-3. "What are the **key features**? (e.g., 'Print-in-Place, no assembly, no supports')"
-4. "What is the **print time**? (e.g., '19m 50s')"
-5. "What is the **filament weight**? (e.g., '3.9g')"
-6. "What **material** was tested? (e.g., 'PETG')"
-7. "Any **special printing notes**? (e.g., 'Requires clean first layer') - or type 'none' if not applicable"
+---
 
-Once all 7 responses are collected, proceed to PHASE 2.
+## PHASE 1: Gather/Provide Model Information
+
+Ensure the following information is available (either collected via Shortcuts or from existing documentation):
+
+1. **Model Name** - Object/project name
+2. **Primary Function** - What does it do?
+3. **Key Features** - What makes it unique?
+4. **Print Time** - Estimated time (extracted from G-code)
+5. **Filament Used** - Weight in grams (extracted from G-code)
+6. **Filament Type** - Material tested (PETG, PLA, etc.)
+7. **Special Notes** - Critical printing tips or assembly requirements
+
+**For direct generation:** Provide this information clearly, or point to the existing `.md` file containing specs.
 
 ---
 
