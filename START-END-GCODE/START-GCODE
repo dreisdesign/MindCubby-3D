@@ -23,16 +23,16 @@ G1 Z2.0 F3000 ; Lift Z a little
 G1 X10 Y200 F5000.0 ; Move to purge corner (safe edge)
 G92 E0 ; Reset extruder to 0 for absolute E moves
 G1 Z0.0 F1200.0 ; Lower to Z0 (mesh compensation applies printer Z offset)
-; --- AGGRESSIVE MULTI-DIRECTIONAL PRIMING TO CLEAN NOZZLE ---
-G1 X150 Y200 Z0.0 F1500.0 E8.000 ; Purge line 1: X direction (aggressive extrusion)
-G1 X150 Y205 F1500.0 E8.000 ; Purge line 2: Y direction (knock loose filament)
-G1 X10 Y205 Z0.0 F1500.0 E8.000 ; Purge line 3: back in X (multi-directional cleaning)
-G1 X10 Y200 Z0.0 F1500.0 E8.000 ; Purge line 4: return in Y (aggressive final pass)
+; --- Z-PATTERN PRIMING FOR THOROUGH NOZZLE CLEANING ---
+G1 X150 Y200 Z0.0 F1500.0 E12.000 ; Stroke 1: left→right along back edge (aggressive extrusion)
+G1 X10 Y150 Z0.0 F1500.0 E12.000 ; Move to bottom-left corner
+G1 X10 Y200 Z0.0 F1500.0 E12.000 ; Stroke 2: bottom→top on left side (continue extrusion)
+G1 X150 Y200 Z0.0 F1500.0 E12.000 ; Stroke 3: right again along top (final cleaning pass)
 ; --- RETRACT & WIPE ---
 G1 E3.500 F1800.0 ; Retract 3.5mm to reduce ooze after aggressive priming
 G1 Z0.60 F1200.0 ; Lift slightly
-G1 X80 Y200 F5000.0 ; Travel to center for final wipe
-G1 X80 Y207 Z0.60 F1500.0 E4.500 ; Micro-prime wipe (clean nozzle tip)
+G1 X80 Y150 F5000.0 ; Travel away from purge area
+G1 X80 Y160 Z0.60 F1500.0 E4.500 ; Micro-prime wipe (clean nozzle tip)
 G92 E0 ; Reset extruder
 G1 Z2.0 F3000 ; Move Z up a bit after priming
 G1 X30 Y20 Z2.0 F5000.0 ; Move over to safe print start area
