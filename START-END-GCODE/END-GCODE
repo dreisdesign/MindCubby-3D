@@ -1,6 +1,6 @@
 ; Ender 3 V2 - Production End G-Code (active)
-; Status: PRODUCTION BASELINE - WARM STANDBY (as of 2025-11-16)
-; Purpose: Final retract, park, and maintain heat for quick reprints
+; Status: PRODUCTION BASELINE - CURA COMPATIBLE (as of 2025-11-16)
+; Purpose: Final retract, park, and cooldown for Cura USB printing
 
 G91 ; Relative positioning
 G1 E-2 F2700 ; Retract filament 2mm quickly
@@ -13,7 +13,11 @@ G90 ; Switch back to Absolute positioning
 G1 X30 Y200 F5000 ; Park nozzle at front-left (Y200 = bed forward for access)
 M106 S0 ; Turn-off cooling fan
 
-; WARM STANDBY (ready for next print - no blocking pause)
-M104 S180 ; Nozzle to 180°C (warm standby)
-M140 S70 ; Bed to 70°C (warm standby)
-M84 ; Disable all steppers (hotend/bed stay warm)
+; HYBRID COOLDOWN: Signal Cura completion, then auto-reheat for quick reprints
+M104 S0 ; Turn-off hotend (signals Cura: print complete)
+M140 S0 ; Turn-off bed
+G4 P8000 ; Wait 8 seconds (Cura detects completion during this period)
+M104 S180 ; Begin reheating nozzle to standby (180°C)
+M140 S65 ; Begin reheating bed to standby (65°C)
+; NOTE: By the time next print is queued, nozzle/bed are already warming up
+; Saves ~1-2 min vs full cooldown-then-preheat cycle
