@@ -8,6 +8,8 @@ agent: agent
 
 This prompt generates professional Printables listing copy from G-code specifications and user-provided copywriting details.
 
+**Output:** A single, complete `.md` file ready to paste directly into Printables listing.
+
 **Two workflow modes:**
 
 ### Mode 1: Interactive Collection (via Apple Shortcuts)
@@ -16,10 +18,14 @@ Use the **Printables-Copywriting-Wizard** Shortcut to collect copywriting info i
 ### Mode 2: Direct Generation (from existing `.md` files)
 When you already have specs in a `*_printables-description.md` file, provide the copywriting details directly and generate the full listing.
 
+### Mode 3: Multi-Component Assembly (Recommended)
+For modular designs (e.g., rolling pin with 3 parts), combine all component specs into a **single comprehensive listing** with assembly instructions. This generates one merged `.md` file, not three separate listings.
+
 ---
 
 ## PHASE 1: Gather/Provide Model Information
 
+**For single-component models:**
 Ensure the following information is available (either collected via Shortcuts or from existing documentation):
 
 1. **Model Name** - Object/project name
@@ -30,11 +36,26 @@ Ensure the following information is available (either collected via Shortcuts or
 6. **Filament Type** - Material tested (PETG, PLA, etc.)
 7. **Special Notes** - Critical printing tips or assembly requirements
 
-**For direct generation:** Provide this information clearly, or point to the existing `.md` file containing specs.
+**For multi-component assemblies:**
+Provide specs for each component:
+- Component name, print time, weight, filament
+- Assembly order and fit details (snap-fit, threads, interlocking)
+- Critical per-component notes (infill pattern, z-seam, orientation)
+- Combined total time and weight
+
+**For direct generation:** Provide this information clearly, or point to the existing `.md` file(s) containing specs.
 
 ---
 
 ## PHASE 2: Generate Copy Using Guidelines Below
+
+**Output Format:**
+Generate a **single, complete `.md` file** containing all four required sections (Title, Summary, Tags, Description). For multi-component designs, include:
+- A merged **Print Settings** table showing all components and combined totals
+- **Assembly Instructions** section with component list and step-by-step fit
+- **Per-Component Printing Notes** explaining optimal settings for each part
+
+This single `.md` file can be copy-pasted directly into the Printables listing.
 
 AI Copywriting Guide for 3D Printables Models
 Use this guide to generate copy for Printables listings, ensuring all output is technical, concise, and highly scannable.
