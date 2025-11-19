@@ -22,8 +22,9 @@ G1 X10 Y200 F5000.0 ; Move to purge corner
 G1 Z0.2 F1200.0 ; Lower to first layer height for priming
 ; --- AGGRESSIVE PRIME LINE ---
 G1 X150 Y200 Z0.2 F1500.0 E15 ; Draw a long, heavy prime line
-G1 X150 Y205 Z0.2 F1500.0 E30 ; Draw a second, heavier line right next to it
-G92 E0 ; Reset extruder to 0 after priming is done
+G1 X150 Y205 Z0.2 F1500.0 E30 ; Draw a second, heavier line
+G1 E-0.5 F1800 ; Retract 0.5mm slower to relieve pressure without skipping
+G92 E0 ; Reset extruder
 G1 Z2.0 F3000 ; Lift Z to clear the prime line
 G1 X30 Y20 Z2.0 F5000.0 ; Move to print start area
 
