@@ -2,6 +2,43 @@
 
 All changes to the MINDCUBBY-3D repository.
 
+## [2.1.0] - 2025-11-29
+
+### OctoPrint Setup & PrusaSlicer Integration 🖨️
+
+#### Added
+- **OctoPrint Server Installation** on macOS with `caffeinate` sleep prevention
+- **Start Script** (`scripts/start-octoprint.sh`) for easy OctoPrint launch on port 5001
+- **Serial Configuration Fix** - Checksum bypass for mriscoc firmware compatibility
+- **PrusaSlicer Integration** - Direct printing to OctoPrint via Global API Key
+- **Etsy Shop Branding** - Professional shop title and copy in `.github/instructions/etsy.profile.md`
+  - Title: "Delightfully Engineered 3D Design: Form, Function, Fun" (54 chars)
+  - Tagline: "I design and engineer functional 3D art that is precise, modular, and delightfully fun to use."
+  - Complete about story focused on design systems and functional art
+
+#### Fixed
+- **OctoPrint Connection Issue** - "Device not configured" error resolved:
+  1. Replaced faulty USB cable
+  2. Enabled macOS USB security approval
+  3. Added serial checksum bypass to `~/Library/Application Support/OctoPrint/config.yaml`
+- **First Layer Quality** - Fixed prime line from `X150 Y205` to `X10 Y205` (prevents nozzle dragging)
+
+#### Configuration
+- **OctoPrint Port:** 5001 (avoids macOS AirPlay Receiver on 5000)
+- **Printer Profile:** Ender-3 V2 with mriscoc firmware 2.1.3, BLTouch, PEI bed
+- **Serial Settings:** 
+  ```yaml
+  serial:
+    sendChecksumWithUnknownCommands: false
+    neverSendChecksums: true
+    receiveAll: true
+  ```
+- **Baud Rate:** 115200
+
+#### Documentation
+- Created `DOCUMENTATION/OCTOPRINT_SETUP.md` (installation, configuration, PrusaSlicer integration)
+- Updated `scripts/start-octoprint.sh` with setup reminders
+
 ## [2.0.1] - 2025-11-13
 
 ### Documentation Consolidation 📚
