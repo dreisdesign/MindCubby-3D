@@ -6,9 +6,17 @@
     "menu": "node scripts/menu.js",
     "specs": "python3 scripts/gcode_specs.py PRINTABLES",
     "p": "python3 scripts/gcode_specs.py PRINTABLES",
-    "commit": "bash scripts/gcode-commit.sh"
+    "commit": "bash scripts/gcode-commit.sh",
+    "server": "bash scripts/server-manager.sh",
+    "o": "ssh dan@192.168.86.33 '~/scripts/server-manager.sh'",
+    "octoprint-update": "ssh dan@192.168.86.33 '~/octoprint-env/bin/pip install --upgrade octoprint'"
   },
-  "keywords": ["3d-printing", "ender3", "cura", "gcode"],
+  "keywords": [
+    "3d-printing",
+    "ender3",
+    "cura",
+    "gcode"
+  ],
   "author": "dreisdesign",
   "license": "MIT",
   "engines": {

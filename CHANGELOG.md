@@ -2,6 +2,38 @@
 
 All changes to the MINDCUBBY-3D repository.
 
+## [2.2.0] - 2025-12-02
+
+### OctoPrint Python Upgrade & Automation Enhancements 🚀
+
+#### Added
+- **Python 3.13 Migration** - OctoPrint now runs on Python 3.13.9 (eliminates end-of-life warning)
+- **npm Quick Commands** for server automation:
+  - `npm run o` - Remote OctoPrint start/health check (SSH to M1 server)
+  - `npm run octoprint-update` - One-command OctoPrint upgrade via pip
+- **SSH Key Authentication** - Passwordless ed25519 key setup (no password prompts)
+- **Agent Mode Documentation** - Updated `.github/agents/Ender-3 V2.agent.md` with:
+  - Infrastructure details (M1 server at 192.168.86.33, M3 client)
+  - Workflow requirements for terminal output verification
+  - Quick reference for all npm scripts
+
+#### Fixed
+- **Safe Mode Error** - Resolved "Address already in use" port conflict on upgrade
+  - Process cleanup automation added to `server-manager.sh`
+  - Safe mode flag cleared and OctoPrint restarted cleanly
+- **OctoPrint Port Binding** - Improved process termination in restart workflow
+
+#### Infrastructure Updates
+- **Server:** M1 Mac at 192.168.86.33 now running Python 3.13.9 (up from 3.9.6)
+- **venv Path:** `~/octoprint-env/` uses Python 3.13 for long-term support
+- **Automation:** Temperature-tower G-code variant created for Christmas Tree spiralize testing
+
+#### Verified Working
+✅ OctoPrint 1.11.5 with Python 3.13.9 (no deprecation warnings)
+✅ Passwordless SSH for automation scripts
+✅ npm remote scripts execute cleanly
+✅ Server persistence in screen sessions
+
 ## [2.1.0] - 2025-11-29
 
 ### OctoPrint Setup & PrusaSlicer Integration 🖨️

@@ -6,8 +6,9 @@ tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI
 # Ender-3 V2 Chat Mode - SECURE
 
 ## Infrastructure
-- **Server Mac (M1):** 192.168.86.33 - Runs OctoPrint 1.11.5 (persistent 24/7 operation)
+- **Server Mac (M1):** 192.168.86.33 - Runs OctoPrint 1.11.5 with Python 3.13 (persistent 24/7 operation)
 - **Client Mac (M3):** 192.168.86.42 - Development/PrusaSlicer workstation
+- **SSH Key:** Passwordless authentication configured (ed25519)
 
 ## Purpose
 Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
@@ -73,6 +74,13 @@ Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
 - **DOCUMENTATION/QUICK_REFERENCE.md** - Common tasks
 - **CHANGELOG.md** - Version history
 
+### Quick Commands (npm scripts)
+- `npm run p` - Quick spec generation for changed G-code files
+- `npm run o` - Start/check OctoPrint server on M1 (SSH remote)
+- `npm run octoprint-update` - Upgrade OctoPrint to latest version
+- `npm run menu` - Interactive CLI menu for workflow
+- `npm run commit` - One-command Git workflow (specs auto-generated)
+
 ### Auto-Update When Making Changes
 1. Update CHANGELOG.md with version entry
 2. Verify all links still work
@@ -86,6 +94,12 @@ Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
 - **Keep .gitignore intact**
 - **Preserve documentation history**
 - **NO credentials, tokens, or sensitive data**
+
+### Critical Workflow Requirements
+- **ALWAYS check terminal output after running commands** - Never assume success
+- **NEVER skip analyzing command results** - View and interpret output before next step
+- **Continue until task is fully complete** - Don't stop at intermediate steps
+- **Provide next action based on actual output** - Not on assumed state
 
 ### Success Metrics
 - All profiles properly documented
