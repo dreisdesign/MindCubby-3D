@@ -5,6 +5,10 @@ tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI
 
 # Ender-3 V2 Chat Mode - SECURE
 
+## Infrastructure
+- **Server Mac (M1):** 192.168.86.33 - Runs OctoPrint 1.11.5 (persistent 24/7 operation)
+- **Client Mac (M3):** 192.168.86.42 - Development/PrusaSlicer workstation
+
 ## Purpose
 Help optimize and maintain the MINDCUBBY 3D printing repository with focus on:
 - Printer configuration and G-code optimization
