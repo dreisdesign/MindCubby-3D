@@ -1,34 +1,24 @@
-; Ender 3 V2 - Optimized Start G-code (active)
-; Purpose: Improve first-layer adhesion by applying a lower initial Z for priming/skirt
-; Date: 2025-11-16
-; Notes: Active start G-code used by repository
+; Ender 3 V2 Start G-code - BLTouch Safe Mode
+; Status: GENERIC / SAFE BASELINE (2025-12-03)
+; Purpose: Reliable adhesion with BLTouch, prevents oozing during leveling
 
-M140 S{material_bed_temperature} ; Set bed temp (non-blocking)
-M104 S{material_print_temperature} ; Set nozzle temp (non-blocking)
-M190 S{material_bed_temperature} ; Wait for bed
-M109 S{material_print_temperature} ; Wait for nozzle
+M140 S{material_bed_temperature} ; Set Heat Bed temperature
+M190 S{material_bed_temperature} ; Wait for Heat Bed temperature
+M104 S160; Start warming extruder to 160 (prevents oozing during leveling)
 
-G92 E0 ; Reset extruder
 G28 ; Home all axes
-M82 ; Set extruder to absolute mode (and keep it there)
-G90 ; Ensure absolute positioning for XYZ moves
-M501 ; Load settings from EEPROM
-M420 S1 ; Enable mesh from EEPROM
-G29 ; Re-probe with BLTouch
+G29 ; Auto Bed Leveling (BLTouch)
 
-G1 Z2.0 F3000 ; Lift Z a little
-; --- Off-print purge + wipe to avoid dragging a blob onto the model ---
-G1 X10 Y200 F5000.0 ; Move to purge corner
-G1 Z0.2 F1200.0 ; Lower to first layer height for priming
-; --- AGGRESSIVE PRIME LINE ---
-G1 X150 Y200 Z0.2 F1500.0 E15 ; Draw a long, heavy prime line
-G1 X150 Y205 Z0.2 F1500.0 E30 ; Draw a second, heavier line
-G92 E0 ; Reset extruder (no retraction - keep nozzle primed)
-G1 Z2.0 F3000 ; Lift Z to clear the prime line
-G1 X30 Y20 Z2.0 F5000.0 ; Move to print start area
+G1 Z2.0 F3000 ; Move Z Axis up little to prevent scratching of Heat Bed
+G1 X0.1 Y20 Z0.3 F5000.0 ; Move to start position
 
-; NOTE: Cura will now take over. It may issue a small retraction, but the first layer
-; will start from a known E0 position with a fully primed nozzle.
-; Required Cura Settings:
-; - Retraction: ON (e.g., 5mm)
-; - Skirt Line Count: 0
+M104 S{material_print_temperature} ; Set Extruder temperature
+M109 S{material_print_temperature} ; Wait for Extruder temperature
+
+G92 E0 ; Reset Extruder
+G1 X0.1 Y200.0 Z0.3 F1500.0 E15 ; Draw the first line
+G1 X0.4 Y200.0 Z0.3 F5000.0 ; Move to side a little
+G1 X0.4 Y20 Z0.3 F1500.0 E30 ; Draw the second line
+G92 E0 ; Reset Extruder
+G1 Z2.0 F3000 ; Move Z Axis up little to prevent scratching of Heat Bed
+G1 X5 Y20 Z0.3 F5000.0 ; Move over to prevent blob squish
